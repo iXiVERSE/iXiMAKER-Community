@@ -1038,9 +1038,8 @@
 
                 <!-- Tab Process -->
             <div id="process" class="tab-content">
-
-                <div class="section" alt="Paramètres généraux">
-                    <h2>Paramètres généraux</h2>
+                <div class="section" alt="Informations générales">
+                    <h2>Informations générales</h2>
                     <!-- Hidden values for IXI standard compliance -->
 
                     <input type="hidden" id="usage" name="usage"
@@ -1049,7 +1048,7 @@
                     <input type="hidden" id="appVersion" name="settings.appVersion" value="MiniMaker-1.0">
                    <!--------------------------------------------------->
                     <h3>Configuration</h3>
-                    <div class="form-row">
+                    <div class="form-row" alt="Ligne 1">
                         <div class="form-group" style="flex: 1;"
                             title="ℹ️ Le référentiel correspond au dossier racine. &#10;Il contient les différentes langues des procédures et des formations relatives à un matériel.">
                             <label for="chapter">
@@ -1062,7 +1061,7 @@
                                 Variante linguistique (Code pays) <span class="icon-color">ℹ️</span>
                             </label>
                             <input type="text" id="langCode" name="settings.langCode" placeholder="FR" style="text-transform: uppercase;"
-                            oninput="this.value = this.value.toUpperCase()" maxlength="2">
+                            oninput="this.value = this.value.toUpperCase()" maxlength="2" value="FR">
                         </div>
                         <div class="form-group" style="flex: 1;">
                             <label for="contentVersion" title="ℹ️ Identifiant alphanumérique de la procédure (ex: date de création, référence)">
@@ -1079,51 +1078,43 @@
                         </div>
                     </div>
 
-                <div class="form-row" style="margin-top: 30px;">
-                    <div class="form-group">
-                        <label for="ownerName" title="ℹ️ Nom du propriétaire de la procédure (généralement le fabricant - non visible)">
-                            Nom du propriétaire <span class="icon-color">ℹ️</span>
-                        </label>
-                        <input type="text" id="ownerName" name="settings.ownerName" placeholder="Nom du créateur de la procédure">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ownerIdentifier" title="ℹ️ Identifiant numérique du propriétaire (ex: N° de siret, TVA intra-communautaire ou autre - non visible)">
-                            Identifiant propriétaire <span class="icon-color">ℹ️</span>
-                        </label>
-                        <input type="text" id="ownerIdentifier" name="settings.ownerIdentifier" placeholder="FR1234567890">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="calibrateAfterStepID" title="ℹ️ Après quelle étape (N° ID) l'utilisateur doit-il positionner l'hologramme">
-                            Calibration <span class="icon-color">ℹ️</span>
-                        </label>
-                        <input type="number" id="calibrateAfterStepID" name="settings.calibrateAfterStepID" placeholder="Aucune (début de procédure)" step="1">
-                    </div>
-
-                    <div class="form-group">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <label for="isPlaced" title="ℹ️ Indique si l'hologramme est déjà positionné" style="margin-bottom: 0;">
-                                Hologramme positionné <span class="icon-color">ℹ️</span>
+                    <div class="form-row" alt="Ligne 2" style="margin-top: 30px;">
+                        <div class="form-group">
+                            <label for="ownerName" title="ℹ️ Nom du propriétaire de la procédure (généralement le fabricant - non visible)">
+                                Nom du propriétaire <span class="icon-color">ℹ️</span>
                             </label>
-                            <input type="checkbox" id="isPlaced" name="settings.isPlaced" style="width: auto;">
+                            <input type="text" id="ownerName" name="settings.ownerName" placeholder="Nom du créateur de la procédure">
                         </div>
+
+                        <div class="form-group">
+                            <label for="ownerIdentifier" title="ℹ️ Identifiant numérique du propriétaire (ex: N° de siret, TVA intra-communautaire ou autre - non visible)">
+                                Identifiant propriétaire <span class="icon-color">ℹ️</span>
+                            </label>
+                            <input type="text" id="ownerIdentifier" name="settings.ownerIdentifier" placeholder="FR1234567890">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="calibrateAfterStepID" title="ℹ️ Après quelle étape (N° ID) l'utilisateur doit-il positionner l'hologramme">
+                                Calibration <span class="icon-color">ℹ️</span>
+                            </label>
+                            <input type="number" id="calibrateAfterStepID" name="settings.calibrateAfterStepID" placeholder="Aucune (début de procédure)" step="1">
+                        </div>
+
                     </div>
                 </div>
-            </div>
-                <div class="section" alt="Paramètres de la procédure">
+                <div class="section" alt="Détails de la procédure">
                     <!-- Hidden values for IXI standard compliance -->
-                    <h2>Paramètres de la procédure</h2>
+                    <h2>Détails de la procédure</h2>
                     <input type="hidden" name="process.workspaceShapeRot.x" value="0">
                     <input type="hidden" name="process.workspaceShapeRot.y" value="0">
                     <input type="hidden" id="workspaceOffsetPosX" name="process.workspaceOffsetPos.x" step="any">
                     <input type="hidden" id="workspaceOffsetPosZ" name="process.workspaceOffsetPos.z" step="any">
                     <input type="hidden" id="workspaceOffsetPosY" name="process.workspaceOffsetPos.y" step="any">
                     <!--------------------------------------------------->
-                    <div class="form-row">
+                    <div class="form-row" alt="Nom description hologramme">
                         <div class="form-group">
                             <label for="processTitle" title="ℹ️ Le titre principal de la procédure tel qu'il apparaîtra dans le menu.">
-                                Nom de la procédure <span class="icon-color">ℹ️</span>
+                                Titre de la procédure <span class="icon-color">ℹ️</span>
                             </label>
                             <input type="text" id="processTitle" name="process.processTitle" placeholder="ex: Maintenance Machine XYZ">
                             <label for="mainHologram" style="margin-top: 30px;"
@@ -1146,63 +1137,63 @@
                             <textarea id="processDesc" name="process.processDesc" placeholder="Cette procédure permet..."></textarea>
                         </div>
                     </div>
-
+                    <!-------------------ZONE DE TRAVAIL ----------------->
                     <h2 title="Réglage de la zone de travail (workspace)" style="margin-top: 30px;">Zone de travail</h2>
                     <div class="form-row workspace-row">
-                        <div class="form-group">
+                        <div class="form-group" alt="Forme de la zone">
                             <label for="workspaceShape" 
                             title="ℹ️ Forme de la zone de travail&#10;👉 Correspond à la forme et la taille de l'hologramme principal">
-                            Forme de l'espace de travail <span class="icon-color">ℹ️</span>
+                            Forme de la zone <span class="icon-color">ℹ️</span>
                             </label>
                             <select id="workspaceShape" name="process.workspaceShape">
-                                <option value="square">Carrée</option>
-                                <option value="circle">Cylindrique</option>
+                                <option value="square">Rectangulaire</option>
+                                <option value="circle">Circulaire</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="workspaceShapeRot" title="ℹ️ Rotation de la zone de travail par rapport à l'hologramme &#10;👉 Horizontale ⇨ plan de travail &#10;👉Verticale ⇨ Mur">
-                                Orientation <span class="icon-color">ℹ️</span>
-                            </label>
-                            <select id="workspaceShapeRot" name="process.workspaceShapeRot.z">
-                                <option alt="Horizontal" title="ex : travail à plat" value="90">Verticale</option>
-                                <option alt="Vertical" title="ex : travail sur un mur" value="0">Horizontale</option>
-                            </select>
+                        <div class="form-group dimension-field" alt="Largeur">
+                            <label title="ℹ️ Largeur de la zone de travail en millimètres">L. (mm) <span class="icon-color">ℹ️</span></label>
+                            <input type="number" name="process.workspaceShapeSize.x" step="1" placeholder="0">
                         </div>
-                        <div class="form-group">
+                            <div class="form-group dimension-field" alt="Profondeur">
+                            <label title="ℹ️ Profondeur de la zone de travail en millimètres">P. (mm) <span class="icon-color">ℹ️</span></label>
+                            <input type="number" name="process.workspaceShapeSize.z" step="1" placeholder="0">
+                        </div>
+                        <div class="form-group dimension-field" alt="Hauteur">
+                            <label title="ℹ️ Hauteur de la zone de travail en millimètres">H. (mm) <span class="icon-color">ℹ️</span></label>
+                            <input type="number" id="inputHauteur" name="process.workspaceShapeSize.y" step="1"placeholder="0">
+                        </div>
+                        <div class="form-group" alt="Position du tracé">
                             <label for="workspaceOffsetCalc" id="positionLabel"
                             title="ℹ️ Position de la zone de travail par rapport à l'hologramme">
-                            Position du tracé <span class="icon-color">ℹ️</span>
+                            Position de la zone <span class="icon-color">ℹ️</span>
                             </label>
                             <select id="workspaceOffsetCalc">
-                                <option value="auto-high">haut</option>
+                                <option value="auto-low">base</option>
                                 <option value="auto-mid" selected>milieu</option>
-                                <option value="auto-low">bas</option>
+                                <option value="auto-high">surface</option>
                             </select>
                             <button type="button" class="btn btn-collapse" id="workspaceOffsetToggleBtn" onclick="toggleWorkspaceOffsetFields()" style="margin-top: 10px; margin-left: 0;">
-                                Afficher offsets manuels
+                                Afficher les décalages personnalisés
                             </button>
                             <div id="workspaceOffsetCustomFields" style="display: none; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
                                 <div style="flex: 1; min-width: 140px;">
-                                    <label for="workspaceOffsetPosL" title="ℹ️ Valeur personnalisée de workspaceOffsetPos.z (mm)">Offset Pos L (mm) <span class="icon-color">ℹ️</span></label>
+                                    <label for="workspaceOffsetPosL" title="ℹ️ Décalage personnalisé de la zone de travail (mm)">Décalage Pos L (mm) <span class="icon-color">ℹ️</span></label>
                                     <input type="number" id="workspaceOffsetPosL" step="1" value="0">
                                 </div>
                                 <div style="flex: 1; min-width: 140px;">
-                                    <label id="workspaceOffsetPosPLabel" for="workspaceOffsetPosP" title="ℹ️ Valeur personnalisée de workspaceOffsetPos.x (mm)">Offset Pos P (mm) <span class="icon-color">ℹ️</span></label>
+                                    <label id="workspaceOffsetPosPLabel" for="workspaceOffsetPosP" title="ℹ️ Décalage personnalisé de la zone de travail (mm)">Décalage Pos P (mm) <span class="icon-color">ℹ️</span></label>
                                     <input type="number" id="workspaceOffsetPosP" step="1" value="0">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group dimension-field">
-                            <label title="ℹ️ Largeur de la zone de travail en millimètres">Largeur (mm) <span class="icon-color">ℹ️</span></label>
-                            <input type="number" name="process.workspaceShapeSize.x" step="1" placeholder="0">
-                        </div>
-                            <div class="form-group dimension-field">
-                            <label title="ℹ️ Profondeur de la zone de travail en millimètres">Prof. (mm) <span class="icon-color">ℹ️</span></label>
-                            <input type="number" name="process.workspaceShapeSize.z" step="1" placeholder="0">
-                        </div>
-                        <div class="form-group dimension-field">
-                            <label title="ℹ️ Hauteur de la zone de travail en millimètres">Hauteur (mm) <span class="icon-color">ℹ️</span></label>
-                            <input type="number" id="inputHauteur" name="process.workspaceShapeSize.y" step="1"placeholder="0">
+                        <div class="form-group" alt="Orientation">
+                            <label for="workspaceShapeRot" title="ℹ️ Rotation de la zone de travail par rapport à l'hologramme &#10;👉 Horizontale ⇨ plan de travail &#10;👉Verticale ⇨ Mur">
+                                Orientation <span class="icon-color">ℹ️</span>
+                            </label>
+                            <select id="workspaceShapeRot" name="process.workspaceShapeRot.z">
+                                <option alt="Vertical" title="ex : travail sur un mur" value="0">Horizontale</option>
+                                <option alt="Horizontal" title="ex : travail à plat" value="90">Verticale</option>
+                            </select>
                         </div>
                     </div>
 
@@ -1219,7 +1210,7 @@
             <!-- Tab Steps -->
             <div id="steps" class="tab-content">
                 <div class="section" alt="Étapes du processus">
-                    <h2>Étapes du processus</h2>
+                    <h2>Gestion des étapes</h2>
                     <div id="steps-container" class="array-container"></div>
                     <button type="button" class="btn btn-add center" onclick="addStep()">
                         + Ajouter une étape
@@ -1305,8 +1296,7 @@
                 calibrateAfterStepID: "",
                 unit: "mm",
                 langCode: "",
-                creatorID: 0,
-                isPlaced: false
+                creatorID: 0
             },
             process: {
                 processTitle: "",
@@ -1368,24 +1358,24 @@
                 
                 // Mettre à jour les options
                 positionSelect.innerHTML = isHorizontal 
-                    ? '<option value="auto-high">haut</option><option value="auto-mid">milieu</option><option value="auto-low">bas</option>'
-                    : '<option value="auto-high">face</option><option value="auto-mid">milieu</option><option value="auto-low">fond</option>';
+                    ? '<option value="auto-high">Surface</option><option value="auto-mid">Milieu</option><option value="auto-low">Base</option>'
+                    : '<option value="auto-high">Surface</option><option value="auto-mid">Milieu</option><option value="auto-low">Fond</option>';
                 
                 // Mettre à jour le tooltip du label
                 if (positionLabel) {
                     positionLabel.title = isHorizontal
-                        ? 'ℹ️ Position verticale de la zone de travail\n(Calcul basé sur la hauteur : Haut = -H/2, Milieu = 0, Bas = +H/2)'
-                        : 'ℹ️ Position en profondeur de la zone de travail\n(Calcul basé sur la profondeur : Face = +P/2, Milieu = 0, Fond = -P/2)';
+                        ? 'ℹ️ Position verticale de la zone de travail'
+                        : 'ℹ️ Position en profondeur de la zone de travail)';
                 }
 
                 // Mettre à jour le label Offset Pos P/H selon l'orientation
                 if (offsetPosPLabel) {
                     if (isHorizontal) {
-                        offsetPosPLabel.innerHTML = 'Offset Pos P (mm) <span class="icon-color">ℹ️</span>';
-                        offsetPosPLabel.title = 'ℹ️ Valeur personnalisée de workspaceOffsetPos.x (mm)';
+                        offsetPosPLabel.innerHTML = 'Décalage Pos P (mm) <span class="icon-color">ℹ️</span>';
+                        offsetPosPLabel.title = 'ℹ️ Décalage personnalisé de la zone de travail (mm)';
                     } else {
-                        offsetPosPLabel.innerHTML = 'Offset Pos H (mm) <span class="icon-color">ℹ️</span>';
-                        offsetPosPLabel.title = 'ℹ️ Valeur personnalisée de workspaceOffsetPos.x (mm) en orientation verticale';
+                        offsetPosPLabel.innerHTML = 'Décalage Pos H (mm) <span class="icon-color">ℹ️</span>';
+                        offsetPosPLabel.title = 'ℹ️ Décalage personnalisé de la zone de travail (mm)';
                     }
                 }
                 
@@ -1410,7 +1400,7 @@
 
             const isHidden = fields.style.display === 'none' || fields.style.display === '';
             fields.style.display = isHidden ? 'flex' : 'none';
-            btn.textContent = isHidden ? 'Masquer offsets manuels' : 'Afficher offsets manuels';
+            btn.textContent = isHidden ? 'Masquer les décalages personnalisés' : 'Afficher les décalages personnalisés';
         }
 
 
@@ -2043,11 +2033,6 @@
                     </div>
                 </div>
                 <div class="collapsible-content">
-                    <h3 title="Actions à réaliser pour cette étape.">Liste des actions</h3>
-                    <div id="actions-container-${stepIndex}" class="array-container"></div>
-                    <button type="button" class="btn btn-add center" onclick="addAction(${stepIndex})">
-                        + Ajouter une action
-                    </button>
                     <h3>Détails de l'étape</h3>
                     <div class="form-row">
                             <input type="hidden" name="step[${stepIndex}].stepID" value="${stepIndex + 1}">
@@ -2121,6 +2106,11 @@
 
                         </div>
                     </div>
+                    <h3 title="Actions à réaliser pour cette étape.">Liste des actions</h3>
+                    <div id="actions-container-${stepIndex}" class="array-container"></div>
+                    <button type="button" class="btn btn-add center" onclick="addAction(${stepIndex})">
+                        + Ajouter une action
+                    </button>
                 </div>
             `;
 
@@ -2207,7 +2197,7 @@
                         <!-- Colonne gauche -->
                         <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
                             <div class="form-group">
-                                <label title="Nom de l'action affiché dans l'interface">Titre de l'action <span class="icon-color">ℹ️</span></label>
+                                <label title="Nom de l'action affiché dans l'interface">Titre (obligatoire) <span class="icon-color">ℹ️</span></label>
                                 <input type="hidden" name="action[${stepIndex}][${actionIndex}].actionID">
                                 <input type="text" name="action[${stepIndex}][${actionIndex}].actionTitle">
                             </div>
@@ -2220,12 +2210,9 @@
                         <!-- Colonne droite -->
                         <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
                             <div style="display: flex; gap: 15px;">
-                                <div class="form-group" style="flex: 0 0 200px;">
-                                    <label title="Référence du template de feedback à utiliser">ID template feedback <span class="icon-color">ℹ️</span></label>
-                                    <input type="number" name="action[${stepIndex}][${actionIndex}].feedbackItemTemplateID" value="0" step="1">
-                                </div>
+                                <input type="hidden" name="action[${stepIndex}][${actionIndex}].feedbackItemTemplateID" value="0" step="1">
                                 <div class="form-group" style="flex: 1;">
-                                    <label title="Image de l'action en cours (optionnelle). ⚠️ Acutalise et remplace l'image de l'étape dès que l'action est activée.">Image <span class="icon-color">ℹ️</span></label>
+                                    <label title="Image de l'action en cours (optionnelle). ⚠️ Acutalise et remplace l'image de l'étape dès que l'action est activée.">Image de l'action (png/jpg) <span class="icon-color">ℹ️</span></label>
                                     <div class="file-input-wrapper">
                                         <input type="text" name="action[${stepIndex}][${actionIndex}].actionImg"  placeholder="Aucun nom de fichier">
                                         <input type="file" id="actionImg-${stepIndex}-${actionIndex}" accept="image/*">
@@ -2255,32 +2242,9 @@
                                     </button>
                                 </div>
                             </div>
-                            <div style="flex: 0.8;">
-                                <label style="font-size: 0.9em; font-weight: 600; margin-bottom: 5px; display: block;">Position</label>
-                                <div style="display: flex; gap: 8px;">
-                                    <div class="form-group" style="flex: 1;">
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            <label style="font-size: 0.9em; margin: 0; min-width: 15px;">X</label>
-                                            <input type="number" name="action[${stepIndex}][${actionIndex}].actionHologramOffsetPos.x" step="1" value="0" style="flex: 1;">
-                                        </div>
-                                        <span class="vector-value" id="actionHologramOffsetPosX-${stepIndex}-${actionIndex}">0</span>
-                                    </div>
-                                    <div class="form-group" style="flex: 1;">
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            <label style="font-size: 0.9em; margin: 0; min-width: 15px;">Y</label>
-                                            <input type="number" name="action[${stepIndex}][${actionIndex}].actionHologramOffsetPos.y" step="1" value="0" style="flex: 1;">
-                                        </div>
-                                        <span class="vector-value" id="actionHologramOffsetPosY-${stepIndex}-${actionIndex}">0</span>
-                                    </div>
-                                    <div class="form-group" style="flex: 1;">
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            <label style="font-size: 0.9em; margin: 0; min-width: 15px;">Z</label>
-                                            <input type="number" name="action[${stepIndex}][${actionIndex}].actionHologramOffsetPos.z" step="1" value="0" style="flex: 1;">
-                                        </div>
-                                        <span class="vector-value" id="actionHologramOffsetPosZ-${stepIndex}-${actionIndex}">0</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <input type="hidden" name="action[${stepIndex}][${actionIndex}].actionHologramOffsetPos.x" step="1" value="0" style="flex: 1;">
+                            <input type="hidden" name="action[${stepIndex}][${actionIndex}].actionHologramOffsetPos.y" step="1" value="0" style="flex: 1;">
+                            <input type="hidden" name="action[${stepIndex}][${actionIndex}].actionHologramOffsetPos.z" step="1" value="0" style="flex: 1;">
                             <div class="form-group" style="flex: 1;">
                                 <label title="Fichier audio de commentaire pour l'action">Fichier audio <span class="icon-color">ℹ️</span></label>
                                 <div class="file-input-wrapper">
@@ -3212,8 +3176,7 @@
                     calibrateAfterStepID: parseInt(document.getElementById('calibrateAfterStepID').value) || 0,
                     unit: document.getElementById('unit').value,
                     langCode: document.getElementById('langCode').value,
-                    creatorID: parseInt(document.getElementById('creatorID').value) || 0,
-                    isPlaced: document.getElementById('isPlaced').checked
+                    creatorID: parseInt(document.getElementById('creatorID').value) || 0
                 },
                 process: {
                     processTitle: document.getElementById('processTitle').value,
@@ -3253,9 +3216,9 @@
                                 const inputH = document.getElementById('inputHauteur');
                                 const hauteur = inputH ? (parseFloat(inputH.value) || 0) : 0;
 
-                                if (selection === 'auto-low') {
+                                if (selection === 'auto-high') {
                                     return parseInt(Math.round(hauteur / 2));
-                                } else if (selection === 'auto-high') {
+                                } else if (selection === 'auto-low') {
                                     return parseInt(Math.round(-(hauteur / 2)));
                                 } else if (selection === 'auto-mid') {
                                     return 0;
@@ -3447,7 +3410,6 @@
             document.getElementById('unit').value = data.settings?.unit || 'mm';
             document.getElementById('langCode').value = data.settings?.langCode || '';
             document.getElementById('creatorID').value = data.settings?.creatorID || 0;
-            document.getElementById('isPlaced').checked = data.settings?.isPlaced || false;
 
             // Charger les informations du processus
             document.getElementById('processTitle').value = data.process?.processTitle || '';
