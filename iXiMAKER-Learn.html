@@ -368,6 +368,19 @@
             align-items: center;
         }
 
+        .section-topic > .array-item-header {
+            position: relative;
+            min-height: 44px;
+        }
+
+        .section-topic > .array-item-header .array-item-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: max-content;
+        }
+
         .array-item-title {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--secondary-color);
@@ -464,6 +477,23 @@
             border-radius: 8px;
             padding: 10px;
             background: #f8f9fa;
+        }
+
+        .course-path-main-title {
+            text-align: center;
+            font-family: inherit;
+            font-size: 1.05em;
+            font-weight: 500;
+            color: var(--blue-light);
+            margin-bottom: 4px;
+        }
+
+        .course-path-main-subtitle {
+            text-align: center;
+            font-size: 0.78rem;
+            line-height: 1.35;
+            color: var(--grey-mid);
+            margin-bottom: 10px;
         }
 
         .course-path-columns {
@@ -1096,8 +1126,8 @@
 
             <!-- Tab Topics -->
             <div id="topics" class="tab-content">
-                <div class="section" alt="Topics de la formation">
-                    <h2>Topics de la formation</h2>
+                <div class="section" alt="Gestion des topics">
+                    <h2>Gestion des topics</h2>
                     <div id="topics-container" class="array-container"></div>
                     <button type="button" class="btn btn-add center" onclick="addTopic()">
                         + Ajouter un topic
@@ -1107,8 +1137,8 @@
 
             <!-- Tab Courses -->
             <div id="courses" class="tab-content">
-                <div class="section" alt="Cours de la formation">
-                    <h2>Cours de la formation</h2>
+                <div class="section" alt="Gestion des cours">
+                    <h2>Gestion des cours</h2>
                     <div id="courses-container" class="array-container"></div>
                     <button type="button" class="btn btn-add center" onclick="addcourse()">
                         + Ajouter un cours
@@ -1498,12 +1528,7 @@
                     </div>
                 </div>
                 <div class="collapsible-content">
-                    <h3>Liste des Quizzes</h3>
-                    <div id="quizzes-container-${topicIndex}" class="array-container"></div>
-                    <button type="button" class="btn btn-add center" onclick="addquizz(${topicIndex})">
-                        + Ajouter un quizz
-                    </button>
-                    <h3>Détails du Topic</h3>
+                    <h3 style="margin-top: 25px !important;">Créer un Topic</h3>
                     <div class="form-row top-spacer" style="margin-top: 20px;">
                             <input type="hidden" name="topic[${topicIndex}].topicID" value="${topicIndex + 1}">
                             <input type="hidden" name="topic[${topicIndex}].topicHologramOffsetPos.x" id="topicHologramOffsetPosXInput-${topicIndex}" value="0">
@@ -1594,6 +1619,12 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
 
                         <div style="display:none;">
                         </div>
+
+                    <h3>Créer un Quiz</h3>
+                    <div id="quizzes-container-${topicIndex}" class="array-container"></div>
+                    <button type="button" class="btn btn-add center" onclick="addquizz(${topicIndex})">
+                        + Ajouter un quizz
+                    </button>
                     
                 </div>
             `;
@@ -2000,14 +2031,17 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                             <textarea name="quizz[${topicIndex}][${quizzIndex}].quizQuestion" ></textarea>
                         </div>
                         <div class="form-group">
-                            <label title="Permet d'apporter des précisions si besoin (optionnel)">Note additionnelle <span class="icon-color">ℹ️</span></label>
+                            <label title="Permet d'apporter des précisions si besoin (optionnel)">Note <span class="icon-color">ℹ️</span></label>
                             <textarea name="quizz[${topicIndex}][${quizzIndex}].quizNote"></textarea>
                         </div>
                     </div>
 
                     <input type="hidden" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPrefab" id="quizzIndicatorPrefab-${topicIndex}-${quizzIndex}" value='[]'>
 
-                    <div style="display: flex; gap: 30px; margin-top: 20px; margin-bottom: 15px; align-items: flex-start; flex-wrap: wrap;">
+                    <div style="margin-top: 16px; margin-bottom: 15px; border: 1px solid var(--grey-mid); border-radius: 6px; padding: 14px 16px;">
+                        <h3 style="margin: 0; text-align: center; color: var(--grey-mid); font-size: 1.5em; font-family: 'Exo 2';">Indicateurs</h3>
+                        <p style="margin: 4px 0 14px; text-align: center; color: var(--grey-mid); font-size: 0.9em;">Éléments visuels optionnels positionnés dans l'espace 3D.</p>
+                    <div style="display: grid; grid-template-columns: 1.8fr 0.8fr 1.5fr; gap: 20px; margin-top: 0; margin-bottom: 0; align-items: flex-start;">
                         <div style="display: flex; flex-direction: column; gap: 8px; flex: 2;">
                             <label style="margin: 0;" title="Type de marqueur 3D affiché lors du quizz">Type d'indicateur <span class="icon-color">ℹ️</span></label>
                             <div style="display: flex; gap: 8px;">
@@ -2017,52 +2051,62 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                                 <button type="button" class="feedback-type-btn" data-type="point" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, 'point')">Point</button>
                                 <button type="button" class="feedback-type-btn btn-clear-indicator" id="clear-quizz-indicator-${topicIndex}-${quizzIndex}" onclick="clearQuizzIndicatorType(${topicIndex}, ${quizzIndex})" style="display: none;">✕ Annuler</button>
                             </div>
+                            <div id="quizz-indicator-options-${topicIndex}-${quizzIndex}" style="display: none; gap: 25px; margin-top: 8px; margin-bottom: 0; flex-wrap: wrap; align-items: flex-start;">
+                                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                    <label style="margin: 0; font-size: 0.9em;">Direction</label>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" class="feedback-option-btn-small" data-option="in" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, 'in')">In</button>
+                                        <button type="button" class="feedback-option-btn-small" data-option="out" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, 'out')">Out</button>
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                    <label style="margin: 0; font-size: 0.9em;">Orientation</label>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" class="feedback-option-btn-small" data-option="vertical" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, 'vertical')">Vertical</button>
+                                        <button type="button" class="feedback-option-btn-small" data-option="horizontal" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, 'horizontal')">Horizontal</button>
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                    <label style="margin: 0; font-size: 0.9em;">Distance</label>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" class="feedback-option-btn-small" id="quizz-distance-btn-${topicIndex}-${quizzIndex}" data-option="non" onclick="toggleQuizzIndicatorDistance(${topicIndex}, ${quizzIndex})">Non</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 8px; flex: 0.5;">
                             <label style="margin: 0;" title="Taille de l'indicateur (1 = taille normale)">Échelle <span class="icon-color">ℹ️</span></label>
                             <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPrefabScale" step="0.1" value="1" style="width: 70px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
                         </div>
-                        <div style="display: flex; flex-direction: column; gap: 8px; flex: 1.5;">
-                            <label style="margin: 0;">Position</label>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <label style="margin: 0; font-size: 0.85em;">X</label>
-                                <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                <label style="margin: 0; font-size: 0.85em;">Y</label>
-                                <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                <label style="margin: 0; font-size: 0.85em;">Z</label>
-                                <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1.5;">
+                            <button type="button" class="feedback-type-btn" id="quizz-posrot-toggle-${topicIndex}-${quizzIndex}" onclick="toggleQuizzPosRot(${topicIndex}, ${quizzIndex})" style="margin: 0; font-weight: 400;">
+                                Position & Rotation ▼
+                            </button>
+                            <div id="quizz-posrot-content-${topicIndex}-${quizzIndex}" style="display: none; flex-direction: column; gap: 12px;">
+                                <label style="margin: 0;">Position</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <label style="margin: 0; font-size: 0.85em;">X</label>
+                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                    <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                    <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                </div>
+                                <label style="margin: 0;">Rotation</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <label style="margin: 0; font-size: 0.85em;">X</label>
+                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                    <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                    <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                </div>
                             </div>
                         </div>
-                        <div style="display: flex; flex-direction: column; gap: 8px; flex: 1.5;">
-                            <label style="margin: 0;">Rotation</label>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <label style="margin: 0; font-size: 0.85em;">X</label>
-                                <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                <label style="margin: 0; font-size: 0.85em;">Y</label>
-                                <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                <label style="margin: 0; font-size: 0.85em;">Z</label>
-                                <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            </div>
-                        </div>
+                    </div>
                     </div>
 
-                    <div id="quizz-indicator-options-${topicIndex}-${quizzIndex}" style="display: none; gap: 25px; margin-top: 40px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <label style="margin: 0; font-size: 0.9em;">Direction :</label>
-                            <button type="button" class="feedback-option-btn-small" data-option="in" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, 'in')">In</button>
-                            <button type="button" class="feedback-option-btn-small" data-option="out" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, 'out')">Out</button>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <label style="margin: 0; font-size: 0.9em;">Orientation :</label>
-                            <button type="button" class="feedback-option-btn-small" data-option="vertical" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, 'vertical')">Vertical</button>
-                            <button type="button" class="feedback-option-btn-small" data-option="horizontal" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, 'horizontal')">Horizontal</button>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <label style="margin: 0; font-size: 0.9em;">Distance :</label>
-                            <button type="button" class="feedback-option-btn-small" id="quizz-distance-btn-${topicIndex}-${quizzIndex}" data-option="non" onclick="toggleQuizzIndicatorDistance(${topicIndex}, ${quizzIndex})">Non</button>
-                        </div>
-                    </div>
-                    
+
                     <div style="display:none;">
                         <h3>Position de l'hologramme</h3>
                         <div class="vector3-group">
@@ -2316,7 +2360,7 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 30px; margin-top: 20px; margin-bottom: 15px; align-items: flex-start; flex-wrap: wrap;">
+                <div style="display: grid; grid-template-columns: 1.8fr 0.8fr 1.5fr; gap: 20px; margin-top: 20px; margin-bottom: 15px; align-items: flex-start;">
                     <div style="display: flex; flex-direction: column; gap: 8px; flex: 2;">
                         <label style="margin: 0;" title="Type de marqueur 3D affiché lors du feedback">Type d'indicateur <span class="icon-color">ℹ️</span></label>
                         <div style="display: flex; gap: 8px; width: fit-content;">
@@ -2326,51 +2370,61 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                             <button type="button" class="feedback-type-btn feedback-type-btn-fixed${typeActiveClass.point}" data-type="point" onclick="updateFeedbackType(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'point')">Point</button>
                             <button type="button" class="feedback-type-btn feedback-type-btn-fixed btn-clear-indicator" id="clear-feedback-indicator-${topicIndex}-${quizzIndex}-${feedbackIndex}" onclick="clearFeedbackType(${topicIndex}, ${quizzIndex}, ${feedbackIndex})" style="display: ${quizzType ? 'inline-block' : 'none'};">✕ Annuler</button>
                         </div>
+                        <div id="feedback-options-${topicIndex}-${quizzIndex}-${feedbackIndex}" style="display: ${optionsDisplay}; flex-wrap: wrap; gap: 25px; margin-top: 8px; align-items: flex-start;">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                <label style="margin: 0; font-size: 0.9em;">Direction</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <button type="button" class="feedback-option-btn-small${directionInActive}" data-option="in" onclick="updateFeedbackDirection(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'in')">In</button>
+                                    <button type="button" class="feedback-option-btn-small${directionOutActive}" data-option="out" onclick="updateFeedbackDirection(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'out')">Out</button>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                <label style="margin: 0; font-size: 0.9em;">Orientation</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <button type="button" class="feedback-option-btn-small${orientationVertActive}" data-option="vertical" onclick="updateFeedbackOrientation(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'vertical')">Vertical</button>
+                                    <button type="button" class="feedback-option-btn-small${orientationHorActive}" data-option="horizontal" onclick="updateFeedbackOrientation(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'horizontal')">Horizontal</button>
+                                </div>
+                            </div>
+                            <div style="display: none; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                <label style="margin: 0; font-size: 0.9em;">Distance</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <button type="button" class="feedback-option-btn-small${distanceActive}" id="distance-btn-${topicIndex}-${quizzIndex}-${feedbackIndex}" data-option="${distanceOption}" onclick="toggleFeedbackDistance(${topicIndex}, ${quizzIndex}, ${feedbackIndex})">${distanceText}</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 8px; flex: 0.5;">
                         <label style="margin: 0;" title="Taille de l'indicateur (1 = taille normale)">Échelle <span class="icon-color">ℹ️</span></label>
                         <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackPrefabScale" step="0.1" value="1" style="width: 70px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; flex: 1.5;">
-                        <label style="margin: 0;">Position</label>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <label style="margin: 0; font-size: 0.85em;">X</label>
-                            <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Y</label>
-                            <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Z</label>
-                            <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                        </div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; flex: 1.5;">
-                        <label style="margin: 0;">Rotation</label>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <label style="margin: 0; font-size: 0.85em;">X</label>
-                            <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Y</label>
-                            <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Z</label>
-                            <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1.5;">
+                        <button type="button" class="feedback-type-btn" id="feedback-posrot-toggle-${topicIndex}-${quizzIndex}-${feedbackIndex}" onclick="toggleFeedbackPosRot(${topicIndex}, ${quizzIndex}, ${feedbackIndex})" style="margin: 0; font-weight: 400;">
+                            Position & rotation ▼
+                        </button>
+                        <div id="feedback-posrot-content-${topicIndex}-${quizzIndex}-${feedbackIndex}" style="display: none; flex-direction: column; gap: 16px;">
+                            <label style="margin: 0;">Position</label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <label style="margin: 0; font-size: 0.85em;">X</label>
+                                <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                            </div>
+                            <label style="margin: 0;">Rotation</label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <label style="margin: 0; font-size: 0.85em;">X</label>
+                                <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                <input type="number" name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].feedbackRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="feedback-options-${topicIndex}-${quizzIndex}-${feedbackIndex}" style="display: ${optionsDisplay}; flex-wrap: wrap; gap: 25px; margin-top: 40px; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <label style="margin: 0; font-size: 0.9em;">Direction</label>
-                        <button type="button" class="feedback-option-btn-small${directionInActive}" data-option="in" onclick="updateFeedbackDirection(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'in')">In</button>
-                        <button type="button" class="feedback-option-btn-small${directionOutActive}" data-option="out" onclick="updateFeedbackDirection(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'out')">Out</button>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <label style="margin: 0; font-size: 0.9em;">Orientation</label>
-                        <button type="button" class="feedback-option-btn-small${orientationVertActive}" data-option="vertical" onclick="updateFeedbackOrientation(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'vertical')">Vertical</button>
-                        <button type="button" class="feedback-option-btn-small${orientationHorActive}" data-option="horizontal" onclick="updateFeedbackOrientation(${topicIndex}, ${quizzIndex}, ${feedbackIndex}, 'horizontal')">Horizontal</button>
-                    </div>
-                    <div style="display: none; align-items: center; gap: 10px;">
-                        <label style="margin: 0; font-size: 0.9em;">Distance</label>
-                        <button type="button" class="feedback-option-btn-small${distanceActive}" id="distance-btn-${topicIndex}-${quizzIndex}-${feedbackIndex}" data-option="${distanceOption}" onclick="toggleFeedbackDistance(${topicIndex}, ${quizzIndex}, ${feedbackIndex})">${distanceText}</button>
-                    </div>
-                </div>
+
                 </div>
             `;
 
@@ -2390,24 +2444,8 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
             const choiceDisplay = document.getElementById(`feedback-title-display-${topicIndex}-${quizzIndex}-${feedbackIndex}`);
             if (choiceInput && choiceDisplay) {
                 choiceInput.addEventListener('input', function(e) {
-                    // Récupérer le prefab formaté actuel
-                    const hiddenInput = document.getElementById(`feedbackPrefab-${topicIndex}-${quizzIndex}-${feedbackIndex}`);
-                    let prefabText = '';
-                    if (hiddenInput) {
-                        try {
-                            const prefabArray = JSON.parse(hiddenInput.value);
-                            prefabText = prefabArray.map(val => val.charAt(0).toUpperCase() + val.slice(1)).join(' | ');
-                        } catch (err) {
-                            prefabText = 'Point | Out | Horizontal';
-                        }
-                    }
-                    
                     const choiceValue = e.target.value;
-                    if (choiceValue) {
-                        choiceDisplay.innerHTML = `<b>Choix ${feedbackIndex + 1} | </b>${prefabText}<b> | </b>${choiceValue}`;
-                    } else {
-                        choiceDisplay.innerHTML = `<b>Choix ${feedbackIndex + 1} | </b>${prefabText}`;
-                    }
+                    updateFeedbackDisplayTitle(topicIndex, quizzIndex, feedbackIndex);
                     
                     // Synchroniser avec le modèle
                     if (jsonData.process.topics[topicIndex]?.quizzes[quizzIndex]?.quizChoices[feedbackIndex]) {
@@ -2504,6 +2542,16 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                     jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators[0].indicatorPrefab = [];
                 }
             }
+        }
+
+        function toggleQuizzPosRot(topicIndex, quizzIndex) {
+            const content = document.getElementById(`quizz-posrot-content-${topicIndex}-${quizzIndex}`);
+            const toggleBtn = document.getElementById(`quizz-posrot-toggle-${topicIndex}-${quizzIndex}`);
+            if (!content || !toggleBtn) return;
+
+            const isClosed = content.style.display === 'none' || content.style.display === '';
+            content.style.display = isClosed ? 'flex' : 'none';
+            toggleBtn.textContent = isClosed ? 'Position & rotation ▲' : 'Position & rotation ▼';
         }
 
         function updateQuizzIndicatorDirection(topicIndex, quizzIndex, direction) {
@@ -2675,6 +2723,19 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                     jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizChoices[feedbackIndex].choiceFeedbacks.feedbackPrefab = [];
                 }
             }
+
+            // Mettre à jour le titre affiché pour retirer le prefab du header
+            updateFeedbackDisplayTitle(topicIndex, quizzIndex, feedbackIndex);
+        }
+
+        function toggleFeedbackPosRot(topicIndex, quizzIndex, feedbackIndex) {
+            const content = document.getElementById(`feedback-posrot-content-${topicIndex}-${quizzIndex}-${feedbackIndex}`);
+            const toggleBtn = document.getElementById(`feedback-posrot-toggle-${topicIndex}-${quizzIndex}-${feedbackIndex}`);
+            if (!content || !toggleBtn) return;
+
+            const isClosed = content.style.display === 'none' || content.style.display === '';
+            content.style.display = isClosed ? 'flex' : 'none';
+            toggleBtn.textContent = isClosed ? 'Position & rotation ▲' : 'Position & rotation ▼';
         }
 
         function updateFeedbackDirection(topicIndex, quizzIndex, feedbackIndex, direction) {
@@ -2785,16 +2846,33 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
         function updateFeedbackDisplayTitle(topicIndex, quizzIndex, feedbackIndex) {
             const display = document.getElementById(`feedback-title-display-${topicIndex}-${quizzIndex}-${feedbackIndex}`);
             const hiddenInput = document.getElementById(`feedbackPrefab-${topicIndex}-${quizzIndex}-${feedbackIndex}`);
+            const choiceInput = document.querySelector(`input[name="feedback[${topicIndex}][${quizzIndex}][${feedbackIndex}].choice"]`);
+            const choiceValue = choiceInput?.value?.trim() || '';
             
             if (display && hiddenInput) {
                 try {
                     const prefabArray = JSON.parse(hiddenInput.value);
-                    // Formater: ["point", "out", "horizontal"] -> "Point | Out | Horizontal"
-                    const formattedPrefab = prefabArray.map(val => val.charAt(0).toUpperCase() + val.slice(1)).join(' | ');
-                    display.innerHTML = `<b>Choix ${feedbackIndex + 1} | </b>${formattedPrefab}`;
+                    const hasPrefab = Array.isArray(prefabArray) && prefabArray.length > 0;
+                    const formattedPrefab = hasPrefab
+                        ? prefabArray.map(val => val.charAt(0).toUpperCase() + val.slice(1)).join(' | ')
+                        : '';
+
+                    if (hasPrefab && choiceValue) {
+                        display.innerHTML = `<b>Choix ${feedbackIndex + 1} | </b>${formattedPrefab}<b> | </b>${choiceValue}`;
+                    } else if (hasPrefab) {
+                        display.innerHTML = `<b>Choix ${feedbackIndex + 1} | </b>${formattedPrefab}`;
+                    } else if (choiceValue) {
+                        display.innerHTML = `<b>Choix ${feedbackIndex + 1} | </b>${choiceValue}`;
+                    } else {
+                        display.innerHTML = `<b>Choix ${feedbackIndex + 1}</b>`;
+                    }
                 } catch (e) {
                     // Fallback si le parsing échoue
-                    display.innerHTML = `<b>Choix ${feedbackIndex + 1}</b>`;
+                    if (choiceValue) {
+                        display.innerHTML = `<b>Choix ${feedbackIndex + 1} | </b>${choiceValue}`;
+                    } else {
+                        display.innerHTML = `<b>Choix ${feedbackIndex + 1}</b>`;
+                    }
                 }
             }
         }
@@ -2828,7 +2906,7 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                             <input type="text" name="course[${courseIndex}].courseTitle" placeholder="Exemple : Préparation">
                         </div>
                         <div class="form-group">
-                            <label title="Description détaillée du contenu du cours">Description <span class="icon-color">ℹ️</span></label>
+                            <label title="Description détaillée du contenu du cours">Description du cours <span class="icon-color">ℹ️</span></label>
                             <textarea name="course[${courseIndex}].courseDesc" placeholder="Détails du cours"></textarea>
                         </div>
                         <div class="form-group">
@@ -2839,9 +2917,10 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                     
                     <div class="form-row" style="margin-top: 30px;">
                         <div class="form-group">
-                            <label title="Sélectionnez et ordonnez les topics qui composent ce cours">Contenu du cours <span class="icon-color">ℹ️</span></label>
                             <input type="hidden" name="course[${courseIndex}].coursePath" id="coursePath-input-${courseIndex}">
                             <div class="course-path-builder" data-course-index="${courseIndex}">
+                                <div class="course-path-main-title">Contenu du cours</div>
+                                <div class="course-path-main-subtitle">Organisez votre cours à partir de la liste des sujets disponibles.<br>Glissez-deposez les vers la colonne de chemin et ordonnez-les.</div>
                                 <div class="course-path-columns">
                                     <div class="course-path-column">
                                         <div class="course-path-title">Topics disponibles</div>
@@ -2850,7 +2929,7 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                                         </div>
                                     </div>
                                     <div class="course-path-column">
-                                        <div class="course-path-title">Organisation du cours (glisser-déposer pour ordonner)</div>
+                                        <div class="course-path-title">Organisation du cours (glisser ici)</div>
                                         <div class="course-topic-list course-topic-list-selected" id="courseSelectedtopics-${courseIndex}">
                                             <!-- Chemin du course injecté en JS -->
                                         </div>
@@ -3172,6 +3251,17 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                     };
                 }
 
+                const quizzPosRotToggle = quizz.querySelector(`[id^="quizz-posrot-toggle-"]`);
+                if (quizzPosRotToggle) {
+                    quizzPosRotToggle.id = `quizz-posrot-toggle-${topicIndex}-${j}`;
+                    quizzPosRotToggle.setAttribute('onclick', `toggleQuizzPosRot(${topicIndex}, ${j})`);
+                }
+
+                const quizzPosRotContent = quizz.querySelector(`[id^="quizz-posrot-content-"]`);
+                if (quizzPosRotContent) {
+                    quizzPosRotContent.id = `quizz-posrot-content-${topicIndex}-${j}`;
+                }
+
                 // Feedbacks container
                 const fbc = quizz.querySelector(`[id^="feedbacks-container-"]`);
                 if (fbc) {
@@ -3231,6 +3321,17 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                             jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizChoices[k].choice = e.target.value;
                         }
                     };
+                }
+
+                const posRotToggle = fb.querySelector(`[id^="feedback-posrot-toggle-"]`);
+                if (posRotToggle) {
+                    posRotToggle.id = `feedback-posrot-toggle-${topicIndex}-${quizzIndex}-${k}`;
+                    posRotToggle.setAttribute('onclick', `toggleFeedbackPosRot(${topicIndex}, ${quizzIndex}, ${k})`);
+                }
+
+                const posRotContent = fb.querySelector(`[id^="feedback-posrot-content-"]`);
+                if (posRotContent) {
+                    posRotContent.id = `feedback-posrot-content-${topicIndex}-${quizzIndex}-${k}`;
                 }
 
                 // Réactiver le drag & drop sur ce choix

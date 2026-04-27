@@ -2391,8 +2391,8 @@
                 <input type="hidden" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackID" value="${feedbackIndex + 1}">
                 <input type="hidden" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPrefab" id="feedbackPrefab-${stepIndex}-${actionIndex}-${feedbackIndex}" value='[]'>
 
-                <div style="display: flex; gap: 30px; margin-top: 20px; margin-bottom: 15px; align-items: flex-start; flex-wrap: wrap;">
-                    <div style="display: flex; flex-direction: column; gap: 8px; flex: 2;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 20px; margin-bottom: 15px; align-items: flex-start;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
                         <label style="margin: 0;" title="Type de marqueur 3D affiché lors du feedback">Type d'indicateur <span class="icon-color">ℹ️</span></label>
                         <div style="display: flex; gap: 8px;">
                             <button type="button" class="feedback-type-btn" data-type="zone" onclick="updateFeedbackType(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'zone')">Zone</button>
@@ -2400,51 +2400,62 @@
                             <button type="button" class="feedback-type-btn" data-type="aplomb" onclick="updateFeedbackType(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'aplomb')">Aplomb</button>
                             <button type="button" class="feedback-type-btn" data-type="point" onclick="updateFeedbackType(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'point')">Point</button>
                         </div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; flex: 0.5;">
-                        <label style="margin: 0;" title="Taille de l'indicateur (1 = taille normale)">Échelle <span class="icon-color">ℹ️</span></label>
-                        <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPrefabScale" step="0.1" value="1" style="width: 70px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; flex: 1.5;">
-                        <label style="margin: 0;" title="Coordonnées 3D de placement de l'indicateur">Position <span class="icon-color">ℹ️</span></label>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <label style="margin: 0; font-size: 0.85em;">X</label>
-                            <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Y</label>
-                            <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Z</label>
-                            <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                        <div id="feedback-options-${stepIndex}-${actionIndex}-${feedbackIndex}" style="display: none; flex-wrap: wrap; gap: 25px; margin-top: 12px; align-items: flex-start;">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                <label style="margin: 0; font-size: 0.9em;">Direction</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <button type="button" class="feedback-option-btn-small" data-option="in" onclick="updateFeedbackDirection(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'in')">In</button>
+                                    <button type="button" class="feedback-option-btn-small" data-option="out" onclick="updateFeedbackDirection(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'out')">Out</button>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                <label style="margin: 0; font-size: 0.9em;">Orientation</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <button type="button" class="feedback-option-btn-small" data-option="vertical" onclick="updateFeedbackOrientation(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'vertical')">Vertical</button>
+                                    <button type="button" class="feedback-option-btn-small" data-option="horizontal" onclick="updateFeedbackOrientation(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'horizontal')">Horizontal</button>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                <label style="margin: 0; font-size: 0.9em;">Distance</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <button type="button" class="feedback-option-btn-small" id="distance-btn-${stepIndex}-${actionIndex}-${feedbackIndex}" data-option="non" onclick="toggleFeedbackDistance(${stepIndex}, ${actionIndex}, ${feedbackIndex})">Non</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; flex: 1.5;">
-                        <label style="margin: 0;" title="Angles de rotation de l'indicateur (en degrés)">Rotation <span class="icon-color">ℹ️</span></label>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <label style="margin: 0; font-size: 0.85em;">X</label>
-                            <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Y</label>
-                            <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                            <label style="margin: 0; font-size: 0.85em;">Z</label>
-                            <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                        <label style="margin: 0; text-align: center;" title="Taille de l'indicateur (1 = taille normale)">Échelle <span class="icon-color">ℹ️</span></label>
+                        <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPrefabScale" step="0.1" value="1" style="width: 90px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                        <button type="button" class="feedback-type-btn" id="feedback-posrot-toggle-${stepIndex}-${actionIndex}-${feedbackIndex}" onclick="toggleFeedbackPosRot(${stepIndex}, ${actionIndex}, ${feedbackIndex})" style="margin: 0; font-weight: 400;">
+                            Position & rotation ▼
+                        </button>
+                        <div id="feedback-posrot-content-${stepIndex}-${actionIndex}-${feedbackIndex}" style="display: none; flex-direction: column; gap: 16px;">
+                            <label style="margin: 0;" title="Coordonnées 3D de placement de l'indicateur">Position <span class="icon-color">ℹ️</span></label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <label style="margin: 0; font-size: 0.85em;">X</label>
+                                <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <label style="margin: 0;" title="Angles de rotation de l'indicateur (en degrés)">Rotation <span class="icon-color">ℹ️</span></label>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <label style="margin: 0; font-size: 0.85em;">X</label>
+                                <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                <input type="number" name="feedback[${stepIndex}][${actionIndex}][${feedbackIndex}].feedbackRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="feedback-options-${stepIndex}-${actionIndex}-${feedbackIndex}" style="display: none; flex-wrap: wrap; gap: 25px; margin-top: 40px; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <label style="margin: 0; font-size: 0.9em;">Direction</label>
-                        <button type="button" class="feedback-option-btn-small" data-option="in" onclick="updateFeedbackDirection(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'in')">In</button>
-                        <button type="button" class="feedback-option-btn-small" data-option="out" onclick="updateFeedbackDirection(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'out')">Out</button>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <label style="margin: 0; font-size: 0.9em;">Orientation</label>
-                        <button type="button" class="feedback-option-btn-small" data-option="vertical" onclick="updateFeedbackOrientation(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'vertical')">Vertical</button>
-                        <button type="button" class="feedback-option-btn-small" data-option="horizontal" onclick="updateFeedbackOrientation(${stepIndex}, ${actionIndex}, ${feedbackIndex}, 'horizontal')">Horizontal</button>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <label style="margin: 0; font-size: 0.9em;">Distance</label>
-                        <button type="button" class="feedback-option-btn-small" id="distance-btn-${stepIndex}-${actionIndex}-${feedbackIndex}" data-option="non" onclick="toggleFeedbackDistance(${stepIndex}, ${actionIndex}, ${feedbackIndex})">Non</button>
-                    </div>
-                </div>
             `;
 
             container.appendChild(feedbackDiv);
@@ -2490,6 +2501,16 @@
 
             // Construire et mettre à jour le prefab
             buildFeedbackPrefab(stepIndex, actionIndex, feedbackIndex);
+        }
+
+        function toggleFeedbackPosRot(stepIndex, actionIndex, feedbackIndex) {
+            const content = document.getElementById(`feedback-posrot-content-${stepIndex}-${actionIndex}-${feedbackIndex}`);
+            const toggleBtn = document.getElementById(`feedback-posrot-toggle-${stepIndex}-${actionIndex}-${feedbackIndex}`);
+            if (!content || !toggleBtn) return;
+
+            const isClosed = content.style.display === 'none' || content.style.display === '';
+            content.style.display = isClosed ? 'flex' : 'none';
+            toggleBtn.textContent = isClosed ? 'Position & rotation ▲' : 'Position & rotation ▼';
         }
 
         function updateFeedbackDirection(stepIndex, actionIndex, feedbackIndex, direction) {
@@ -3061,6 +3082,18 @@
                 const optionsDiv = feedback.querySelector(`[id^="feedback-options-"]`);
                 if (optionsDiv) {
                     optionsDiv.id = `feedback-options-${stepIndex}-${actionIndex}-${k}`;
+                }
+
+                // Mettre à jour l'ID et l'action du menu Position & rotation
+                const posRotToggle = feedback.querySelector(`[id^="feedback-posrot-toggle-"]`);
+                if (posRotToggle) {
+                    posRotToggle.id = `feedback-posrot-toggle-${stepIndex}-${actionIndex}-${k}`;
+                    posRotToggle.setAttribute('onclick', `toggleFeedbackPosRot(${stepIndex}, ${actionIndex}, ${k})`);
+                }
+
+                const posRotContent = feedback.querySelector(`[id^="feedback-posrot-content-"]`);
+                if (posRotContent) {
+                    posRotContent.id = `feedback-posrot-content-${stepIndex}-${actionIndex}-${k}`;
                 }
 
                 // Met à jour tous les boutons onclick pour utiliser les nouveaux indices
