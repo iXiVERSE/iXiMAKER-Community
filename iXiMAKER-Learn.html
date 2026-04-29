@@ -263,6 +263,17 @@
             font-size: 1rem !important;
         }
 
+        .section-indicator {
+            background: var(--blue-light-transparent) !important;
+            border: 1px solid var(--blue-light) !important;
+            padding: 10px !important;
+        }
+        .section-indicator .array-item-title {
+            color: var(--blue-light) !important;
+            font-weight: 400 !important;
+            font-size: 1rem !important;
+        }
+
         .collapsible-content h3 {
             margin-top: 0px !important;
             text-align: center;
@@ -2036,77 +2047,14 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                         </div>
                     </div>
 
-                    <input type="hidden" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPrefab" id="quizzIndicatorPrefab-${topicIndex}-${quizzIndex}" value='[]'>
-
                     <div style="margin-top: 16px; margin-bottom: 15px; border: 1px solid var(--grey-mid); border-radius: 6px; padding: 14px 16px;">
                         <h3 style="margin: 0; text-align: center; color: var(--grey-mid); font-size: 1.5em; font-family: 'Exo 2';">Indicateurs</h3>
                         <p style="margin: 4px 0 14px; text-align: center; color: var(--grey-mid); font-size: 0.9em;">Éléments visuels optionnels positionnés dans l'espace 3D.</p>
-                    <div style="display: grid; grid-template-columns: 1.8fr 0.8fr 1.5fr; gap: 20px; margin-top: 0; margin-bottom: 0; align-items: flex-start;">
-                        <div style="display: flex; flex-direction: column; gap: 8px; flex: 2;">
-                            <label style="margin: 0;" title="Type de marqueur 3D affiché lors du quizz">Type d'indicateur <span class="icon-color">ℹ️</span></label>
-                            <div style="display: flex; gap: 8px;">
-                                <button type="button" class="feedback-type-btn" data-type="zone" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, 'zone')">Zone</button>
-                                <button type="button" class="feedback-type-btn" data-type="niveau" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, 'niveau')">Niveau</button>
-                                <button type="button" class="feedback-type-btn" data-type="aplomb" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, 'aplomb')">Aplomb</button>
-                                <button type="button" class="feedback-type-btn" data-type="point" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, 'point')">Point</button>
-                                <button type="button" class="feedback-type-btn btn-clear-indicator" id="clear-quizz-indicator-${topicIndex}-${quizzIndex}" onclick="clearQuizzIndicatorType(${topicIndex}, ${quizzIndex})" style="display: none;">✕ Annuler</button>
-                            </div>
-                            <div id="quizz-indicator-options-${topicIndex}-${quizzIndex}" style="display: none; gap: 25px; margin-top: 8px; margin-bottom: 0; flex-wrap: wrap; align-items: flex-start;">
-                                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
-                                    <label style="margin: 0; font-size: 0.9em;">Direction</label>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <button type="button" class="feedback-option-btn-small" data-option="in" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, 'in')">In</button>
-                                        <button type="button" class="feedback-option-btn-small" data-option="out" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, 'out')">Out</button>
-                                    </div>
-                                </div>
-                                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
-                                    <label style="margin: 0; font-size: 0.9em;">Orientation</label>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <button type="button" class="feedback-option-btn-small" data-option="vertical" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, 'vertical')">Vertical</button>
-                                        <button type="button" class="feedback-option-btn-small" data-option="horizontal" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, 'horizontal')">Horizontal</button>
-                                    </div>
-                                </div>
-                                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
-                                    <label style="margin: 0; font-size: 0.9em;">Distance</label>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <button type="button" class="feedback-option-btn-small" id="quizz-distance-btn-${topicIndex}-${quizzIndex}" data-option="non" onclick="toggleQuizzIndicatorDistance(${topicIndex}, ${quizzIndex})">Non</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; flex-direction: column; gap: 8px; flex: 0.5;">
-                            <label style="margin: 0;" title="Taille de l'indicateur (1 = taille normale)">Échelle <span class="icon-color">ℹ️</span></label>
-                            <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPrefabScale" step="0.1" value="1" style="width: 70px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                        </div>
-                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1.5;">
-                            <button type="button" class="feedback-type-btn" id="quizz-posrot-toggle-${topicIndex}-${quizzIndex}" onclick="toggleQuizzPosRot(${topicIndex}, ${quizzIndex})" style="margin: 0; font-weight: 400;">
-                                Position & Rotation ▼
-                            </button>
-                            <div id="quizz-posrot-content-${topicIndex}-${quizzIndex}" style="display: none; flex-direction: column; gap: 12px;">
-                                <label style="margin: 0;">Position</label>
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <label style="margin: 0; font-size: 0.85em;">X</label>
-                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                    <label style="margin: 0; font-size: 0.85em;">Y</label>
-                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                    <label style="margin: 0; font-size: 0.85em;">Z</label>
-                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                </div>
-                                <label style="margin: 0;">Rotation</label>
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <label style="margin: 0; font-size: 0.85em;">X</label>
-                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                    <label style="margin: 0; font-size: 0.85em;">Y</label>
-                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                    <label style="margin: 0; font-size: 0.85em;">Z</label>
-                                    <input type="number" name="quizz[${topicIndex}][${quizzIndex}].quizzIndicatorRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
-                                </div>
-                            </div>
-                        </div>
+                        <div id="quizz-indicators-container-${topicIndex}-${quizzIndex}" class="array-container"></div>
+                        <button type="button" class="btn btn-add center" onclick="addQuizzIndicator(${topicIndex}, ${quizzIndex})">
+                            + Ajouter un indicateur
+                        </button>
                     </div>
-                    </div>
-
-
                     <div style="display:none;">
                         <h3>Position de l'hologramme</h3>
                         <div class="vector3-group">
@@ -2216,12 +2164,7 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
             jsonData.process.topics[topicIndex].quizzes.push({
                 quizQuestion: "",
                 quizNote: "",
-                quizIndicators: [{
-                    indicatorPrefab: [],
-                    indicatorPrefabScale: "1",
-                    indicatorPos: { x: 0, y: 0, z: 0 },
-                    indicatorRot: { x: 0, y: 0, z: 0 }
-                }],
+                quizIndicators: [],
                 choiceID: quizzIdCounter++,
                 quizzImg: "",
                 feedbackItemTemplateID: 0,
@@ -2233,6 +2176,8 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                 audioIsComment: true,
                 quizChoices: []
             });
+
+            addQuizzIndicator(topicIndex, quizzIndex);
             
             // Mise à jour dynamique du titre dans le header du Quizz
             var display = document.getElementById(`quizz-title-display-${topicIndex}-${quizzIndex}`);
@@ -2254,48 +2199,12 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
             feedbackDiv.className = 'array-item collapsed section-feedback';
             feedbackDiv.id = `feedback-${topicIndex}-${quizzIndex}-${feedbackIndex}`;
 
-            // Récupérer les valeurs de l'indicateur du Quizz pour les appliquer au nouveau feedback
-            const quizzDiv = document.getElementById(`quizz-${topicIndex}-${quizzIndex}`);
-            let quizzType = '';
-            let quizzDirection = '';
-            let quizzOrientation = '';
-            let quizzHasDistance = false;
-            let quizzPrefabArray = [];
-
-            if (quizzDiv) {
-                // Récupérer le type actif du quizz
-                const activeTypeBtn = quizzDiv.querySelector('.feedback-type-btn.active');
-                if (activeTypeBtn) {
-                    quizzType = activeTypeBtn.dataset.type;
-                }
-
-                // Si c'est "point", récupérer direction/orientation/distance
-                if (quizzType === 'point') {
-                    const activeDirectionBtn = quizzDiv.querySelector('[data-option="in"].active, [data-option="out"].active');
-                    if (activeDirectionBtn) {
-                        quizzDirection = activeDirectionBtn.dataset.option;
-                    }
-
-                    const activeOrientationBtn = quizzDiv.querySelector('[data-option="vertical"].active, [data-option="horizontal"].active');
-                    if (activeOrientationBtn) {
-                        quizzOrientation = activeOrientationBtn.dataset.option;
-                    }
-
-                    const distanceBtn = document.getElementById(`quizz-distance-btn-${topicIndex}-${quizzIndex}`);
-                    if (distanceBtn) {
-                        quizzHasDistance = distanceBtn.dataset.option === 'oui';
-                    }
-
-                    // Construire le prefab array pour le feedback
-                    quizzPrefabArray = [quizzType, quizzDirection, quizzOrientation];
-                    if (quizzHasDistance) {
-                        quizzPrefabArray.push('distance');
-                    }
-                } else {
-                    // Pour zone, niveau, aplomb
-                    quizzPrefabArray = [quizzType];
-                }
-            }
+            // Récupérer le premier indicateur du Quizz pour appliquer son prefab au nouveau feedback
+            const quizzPrefabArray = getPrimaryQuizzIndicatorPrefab(topicIndex, quizzIndex);
+            const quizzType = quizzPrefabArray[0] || 'point';
+            const quizzDirection = quizzPrefabArray[1] || 'out';
+            const quizzOrientation = quizzPrefabArray[2] || 'horizontal';
+            const quizzHasDistance = quizzPrefabArray.includes('distance');
 
             // Déterminer quels boutons sont actifs dans le HTML
             const typeActiveClass = {
@@ -2473,80 +2382,348 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
             });
         }
 
-        // Fonctions pour gérer les boutons d'indicateur du Quizz
-        function updateQuizzIndicatorType(topicIndex, quizzIndex, type) {
-            const quizzDiv = document.getElementById(`quizz-${topicIndex}-${quizzIndex}`);
-            if (!quizzDiv) return;
+        // Fonctions pour gérer les indicateurs du Quizz
+        function getQuizzIndicatorCard(topicIndex, quizzIndex, indicatorIndex) {
+            return document.getElementById(`quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
+        }
 
-            // Mettre à jour les boutons actifs - exclure ceux dans les feedbacks
-            const allButtons = Array.from(quizzDiv.querySelectorAll('.feedback-type-btn'));
-            const feedbacksContainer = document.getElementById(`feedbacks-container-${topicIndex}-${quizzIndex}`);
-            const typeButtons = allButtons.filter(btn => !feedbacksContainer || !feedbacksContainer.contains(btn));
-            
-            typeButtons.forEach(btn => {
+        function getPrimaryQuizzIndicatorPrefab(topicIndex, quizzIndex) {
+            const firstCard = getQuizzIndicatorCard(topicIndex, quizzIndex, 0);
+            if (!firstCard) return ['point', 'out', 'horizontal'];
+
+            const hiddenInput = firstCard.querySelector(`input[id^="quizzIndicatorPrefab-"]`);
+            if (!hiddenInput) return ['point', 'out', 'horizontal'];
+
+            try {
+                const prefabArray = JSON.parse(hiddenInput.value || '[]');
+                return Array.isArray(prefabArray) && prefabArray.length > 0 ? prefabArray : ['point', 'out', 'horizontal'];
+            } catch (e) {
+                return ['point', 'out', 'horizontal'];
+            }
+        }
+
+        function updateQuizzIndicatorDisplayTitle(topicIndex, quizzIndex, indicatorIndex) {
+            const display = document.getElementById(`quizz-indicator-title-display-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
+            const hiddenInput = document.getElementById(`quizzIndicatorPrefab-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
+            if (!display || !hiddenInput) return;
+
+            try {
+                const prefabArray = JSON.parse(hiddenInput.value || '[]');
+                if (Array.isArray(prefabArray) && prefabArray.length > 0) {
+                    const formattedPrefab = prefabArray.map(val => val.charAt(0).toUpperCase() + val.slice(1)).join(' | ');
+                    display.innerHTML = `<b>Indicateur ${indicatorIndex + 1} | </b>${formattedPrefab}`;
+                } else {
+                    display.innerHTML = `<b>Indicateur ${indicatorIndex + 1}</b>`;
+                }
+            } catch (e) {
+                display.innerHTML = `<b>Indicateur ${indicatorIndex + 1}</b>`;
+            }
+        }
+
+        function applyQuizzIndicatorState(topicIndex, quizzIndex, indicatorIndex, indicatorData) {
+            const indicatorCard = getQuizzIndicatorCard(topicIndex, quizzIndex, indicatorIndex);
+            if (!indicatorCard) return;
+
+            const prefabArray = Array.isArray(indicatorData.indicatorPrefab) ? indicatorData.indicatorPrefab : [];
+            const scale = indicatorData.indicatorPrefabScale ?? '1';
+            const pos = indicatorData.indicatorPos || { x: 0, y: 0, z: 0 };
+            const rot = indicatorData.indicatorRot || { x: 0, y: 0, z: 0 };
+
+            const hiddenInput = indicatorCard.querySelector(`input[id^="quizzIndicatorPrefab-"]`);
+            if (hiddenInput) hiddenInput.value = JSON.stringify(prefabArray);
+
+            const scaleInput = indicatorCard.querySelector(`input[name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPrefabScale"]`);
+            if (scaleInput) scaleInput.value = scale;
+
+            const posXInput = indicatorCard.querySelector(`input[name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPos.x"]`);
+            if (posXInput) posXInput.value = pos.x || 0;
+            const posYInput = indicatorCard.querySelector(`input[name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPos.y"]`);
+            if (posYInput) posYInput.value = pos.y || 0;
+            const posZInput = indicatorCard.querySelector(`input[name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPos.z"]`);
+            if (posZInput) posZInput.value = pos.z || 0;
+
+            const rotXInput = indicatorCard.querySelector(`input[name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorRot.x"]`);
+            if (rotXInput) rotXInput.value = rot.x || 0;
+            const rotYInput = indicatorCard.querySelector(`input[name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorRot.y"]`);
+            if (rotYInput) rotYInput.value = rot.y || 0;
+            const rotZInput = indicatorCard.querySelector(`input[name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorRot.z"]`);
+            if (rotZInput) rotZInput.value = rot.z || 0;
+
+            const type = prefabArray[0] || '';
+            indicatorCard.querySelectorAll('.feedback-type-btn[data-type]').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.type === type);
             });
 
-            // Afficher/masquer les options selon le type
-            const optionsDiv = document.getElementById(`quizz-indicator-options-${topicIndex}-${quizzIndex}`);
-            if (optionsDiv) {
-                // Seul "point" affiche les options direction/orientation/distance
-                optionsDiv.style.display = type === 'point' ? 'flex' : 'none';
+            const optionsDiv = indicatorCard.querySelector(`[id^="quizz-indicator-options-"]`);
+            if (optionsDiv) optionsDiv.style.display = type === 'point' ? 'flex' : 'none';
+
+            const clearBtn = indicatorCard.querySelector(`[id^="clear-quizz-indicator-"]`);
+            if (clearBtn) clearBtn.style.display = type ? 'inline-block' : 'none';
+
+            if (type === 'point') {
+                const direction = prefabArray[1] || 'out';
+                const orientation = prefabArray[2] || 'horizontal';
+                const hasDistance = prefabArray.includes('distance');
+
+                indicatorCard.querySelectorAll('[data-option="in"], [data-option="out"]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.option === direction);
+                });
+                indicatorCard.querySelectorAll('[data-option="vertical"], [data-option="horizontal"]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.option === orientation);
+                });
+
+                const distanceBtn = indicatorCard.querySelector(`[id^="quizz-distance-btn-"]`);
+                if (distanceBtn) {
+                    distanceBtn.dataset.option = hasDistance ? 'oui' : 'non';
+                    distanceBtn.textContent = hasDistance ? 'Oui' : 'Non';
+                    distanceBtn.classList.toggle('active', hasDistance);
+                }
             }
 
-            // Afficher le bouton Annuler
-            const clearBtn = document.getElementById(`clear-quizz-indicator-${topicIndex}-${quizzIndex}`);
-            if (clearBtn) {
-                clearBtn.style.display = 'inline-block';
+            const quiz = jsonData.process.topics[topicIndex]?.quizzes[quizzIndex];
+            if (quiz) {
+                if (!Array.isArray(quiz.quizIndicators)) quiz.quizIndicators = [];
+                quiz.quizIndicators[indicatorIndex] = {
+                    indicatorPrefab: prefabArray,
+                    indicatorPrefabScale: scale,
+                    indicatorPos: pos,
+                    indicatorRot: rot
+                };
             }
 
-            // Construire et mettre à jour le prefab
-            buildQuizzIndicatorPrefab(topicIndex, quizzIndex);
+            updateQuizzIndicatorDisplayTitle(topicIndex, quizzIndex, indicatorIndex);
         }
 
-        function clearQuizzIndicatorType(topicIndex, quizzIndex) {
-            const quizzDiv = document.getElementById(`quizz-${topicIndex}-${quizzIndex}`);
-            if (!quizzDiv) return;
+        function addQuizzIndicator(topicIndex, quizzIndex, indicatorData = {}) {
+            const container = document.getElementById(`quizz-indicators-container-${topicIndex}-${quizzIndex}`);
+            if (!container) return;
 
-            // Désactiver tous les boutons de type
-            const allButtons = Array.from(quizzDiv.querySelectorAll('.feedback-type-btn'));
-            const feedbacksContainer = document.getElementById(`feedbacks-container-${topicIndex}-${quizzIndex}`);
-            const typeButtons = allButtons.filter(btn => !feedbacksContainer || !feedbacksContainer.contains(btn));
-            
-            typeButtons.forEach(btn => {
+            if (!jsonData.process.topics[topicIndex]?.quizzes[quizzIndex]) return;
+            const indicatorIndex = jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators.length;
+
+            const indicatorDiv = document.createElement('div');
+            indicatorDiv.className = 'array-item collapsed section-indicator';
+            indicatorDiv.id = `quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}`;
+
+            indicatorDiv.innerHTML = `
+                <div class="array-item-header">
+                    <button type="button" class="btn btn-collapse" onclick="toggleCollapse('quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}')">
+                        ⇵ Réduire/Agrandir
+                    </button>
+                    <span class="array-item-title" id="quizz-indicator-title-display-${topicIndex}-${quizzIndex}-${indicatorIndex}">Indicateur ${indicatorIndex + 1}</span>
+                    <div>
+                        <button type="button" class="btn btn-remove" onclick="removeQuizzIndicator(${topicIndex}, ${quizzIndex}, ${indicatorIndex})">
+                            ✕ Supprimer
+                        </button>
+                    </div>
+                </div>
+                <div class="collapsible-content">
+                    <input type="hidden" id="quizzIndicatorPrefab-${topicIndex}-${quizzIndex}-${indicatorIndex}" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPrefab" value='[]'>
+
+                    <div style="margin-top: 16px; border: 1px solid var(--grey-mid); border-radius: 6px; padding: 14px 16px;">
+                        <div style="display: grid; grid-template-columns: 1.8fr 0.8fr 1.5fr; gap: 20px; margin-top: 0; align-items: flex-start;">
+                            <div style="display: flex; flex-direction: column; gap: 8px; flex: 2;">
+                                <label style="margin: 0;" title="Type de marqueur 3D affiché lors du quizz">Type d'indicateur <span class="icon-color">ℹ️</span></label>
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                    <button type="button" class="feedback-type-btn" data-type="zone" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'zone')">Zone</button>
+                                    <button type="button" class="feedback-type-btn" data-type="niveau" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'niveau')">Niveau</button>
+                                    <button type="button" class="feedback-type-btn" data-type="aplomb" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'aplomb')">Aplomb</button>
+                                    <button type="button" class="feedback-type-btn" data-type="point" onclick="updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'point')">Point</button>
+                                    <button type="button" class="feedback-type-btn btn-clear-indicator" id="clear-quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}" onclick="clearQuizzIndicatorType(${topicIndex}, ${quizzIndex}, ${indicatorIndex})" style="display: none;">✕ Annuler</button>
+                                </div>
+                                <div id="quizz-indicator-options-${topicIndex}-${quizzIndex}-${indicatorIndex}" style="display: none; gap: 25px; margin-top: 8px; margin-bottom: 0; flex-wrap: wrap; align-items: flex-start;">
+                                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                        <label style="margin: 0; font-size: 0.9em;">Direction</label>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <button type="button" class="feedback-option-btn-small" data-option="in" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'in')">In</button>
+                                            <button type="button" class="feedback-option-btn-small" data-option="out" onclick="updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'out')">Out</button>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                        <label style="margin: 0; font-size: 0.9em;">Orientation</label>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <button type="button" class="feedback-option-btn-small" data-option="vertical" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'vertical')">Vertical</button>
+                                            <button type="button" class="feedback-option-btn-small" data-option="horizontal" onclick="updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, 'horizontal')">Horizontal</button>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                                        <label style="margin: 0; font-size: 0.9em;">Distance</label>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <button type="button" class="feedback-option-btn-small" id="quizz-distance-btn-${topicIndex}-${quizzIndex}-${indicatorIndex}" data-option="non" onclick="toggleQuizzIndicatorDistance(${topicIndex}, ${quizzIndex}, ${indicatorIndex})">Non</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 8px; flex: 0.5;">
+                                <label style="margin: 0;" title="Taille de l'indicateur (1 = taille normale)">Échelle <span class="icon-color">ℹ️</span></label>
+                                <input type="number" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPrefabScale" step="0.1" value="1" style="width: 70px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1.5;">
+                                <button type="button" class="feedback-type-btn" id="quizz-posrot-toggle-${topicIndex}-${quizzIndex}-${indicatorIndex}" onclick="toggleQuizzPosRot(${topicIndex}, ${quizzIndex}, ${indicatorIndex})" style="margin: 0; font-weight: 400;">
+                                    Position & rotation ▼
+                                </button>
+                                <div id="quizz-posrot-content-${topicIndex}-${quizzIndex}-${indicatorIndex}" style="display: none; flex-direction: column; gap: 12px;">
+                                    <label style="margin: 0;">Position</label>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <label style="margin: 0; font-size: 0.85em;">X</label>
+                                        <input type="number" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPos.x" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                        <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                        <input type="number" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPos.y" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                        <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                        <input type="number" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorPos.z" step="1" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                    </div>
+                                    <label style="margin: 0;">Rotation</label>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <label style="margin: 0; font-size: 0.85em;">X</label>
+                                        <input type="number" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorRot.x" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                        <label style="margin: 0; font-size: 0.85em;">Y</label>
+                                        <input type="number" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorRot.y" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                        <label style="margin: 0; font-size: 0.85em;">Z</label>
+                                        <input type="number" name="quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}].indicatorRot.z" step="any" value="0" style="width: 60px; padding: 7px; border: 2px solid var(--input-border); border-radius: 5px; font-size: 0.9em;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(indicatorDiv);
+
+            jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators.push({
+                indicatorPrefab: Array.isArray(indicatorData.indicatorPrefab)
+                    ? indicatorData.indicatorPrefab
+                    : [],
+                indicatorPrefabScale: indicatorData.indicatorPrefabScale || '1',
+                indicatorPos: indicatorData.indicatorPos || { x: 0, y: 0, z: 0 },
+                indicatorRot: indicatorData.indicatorRot || { x: 0, y: 0, z: 0 }
+            });
+
+            applyQuizzIndicatorState(topicIndex, quizzIndex, indicatorIndex, jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators[indicatorIndex]);
+        }
+
+        function removeQuizzIndicator(topicIndex, quizzIndex, indicatorIndex) {
+            if (!confirm('⚠️ Voulez-vous vraiment supprimer cet indicateur ?')) return;
+            const quiz = jsonData.process.topics[topicIndex]?.quizzes[quizzIndex];
+            if (!quiz) return;
+
+            quiz.quizIndicators.splice(indicatorIndex, 1);
+            const card = document.getElementById(`quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
+            if (card) card.remove();
+            updateQuizzIndicatorsIndexes(topicIndex, quizzIndex);
+        }
+
+        function updateQuizzIndicatorsIndexes(topicIndex, quizzIndex) {
+            const container = document.getElementById(`quizz-indicators-container-${topicIndex}-${quizzIndex}`);
+            if (!container) return;
+
+            const cards = Array.from(container.children);
+            cards.forEach((card, indicatorIndex) => {
+                card.id = `quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}`;
+
+                card.querySelectorAll('input[name], textarea[name], select[name]').forEach(elem => {
+                    const name = elem.getAttribute('name');
+                    if (!name) return;
+                    const newName = name.replace(/quizIndicators\[\d+\]\[\d+\]\[\d+\]/g, `quizIndicators[${topicIndex}][${quizzIndex}][${indicatorIndex}]`);
+                    elem.setAttribute('name', newName);
+                });
+
+                const header = card.querySelector('.array-item-header');
+                if (header) {
+                    const collapseBtn = header.querySelector('.btn.btn-collapse');
+                    if (collapseBtn) collapseBtn.setAttribute('onclick', `toggleCollapse('quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}')`);
+                    const removeBtn = header.querySelector('.btn.btn-remove');
+                    if (removeBtn) removeBtn.setAttribute('onclick', `removeQuizzIndicator(${topicIndex}, ${quizzIndex}, ${indicatorIndex})`);
+                }
+
+                const toggleBtn = card.querySelector(`[id^="quizz-posrot-toggle-"]`);
+                if (toggleBtn) {
+                    toggleBtn.id = `quizz-posrot-toggle-${topicIndex}-${quizzIndex}-${indicatorIndex}`;
+                    toggleBtn.setAttribute('onclick', `toggleQuizzPosRot(${topicIndex}, ${quizzIndex}, ${indicatorIndex})`);
+                }
+
+                const posRotContent = card.querySelector(`[id^="quizz-posrot-content-"]`);
+                if (posRotContent) posRotContent.id = `quizz-posrot-content-${topicIndex}-${quizzIndex}-${indicatorIndex}`;
+
+                const optionsDiv = card.querySelector(`[id^="quizz-indicator-options-"]`);
+                if (optionsDiv) optionsDiv.id = `quizz-indicator-options-${topicIndex}-${quizzIndex}-${indicatorIndex}`;
+
+                const clearBtn = card.querySelector(`[id^="clear-quizz-indicator-"]`);
+                if (clearBtn) {
+                    clearBtn.id = `clear-quizz-indicator-${topicIndex}-${quizzIndex}-${indicatorIndex}`;
+                    clearBtn.setAttribute('onclick', `clearQuizzIndicatorType(${topicIndex}, ${quizzIndex}, ${indicatorIndex})`);
+                }
+
+                const distanceBtn = card.querySelector(`[id^="quizz-distance-btn-"]`);
+                if (distanceBtn) {
+                    distanceBtn.id = `quizz-distance-btn-${topicIndex}-${quizzIndex}-${indicatorIndex}`;
+                    distanceBtn.setAttribute('onclick', `toggleQuizzIndicatorDistance(${topicIndex}, ${quizzIndex}, ${indicatorIndex})`);
+                }
+
+                card.querySelectorAll('.feedback-type-btn[data-type]').forEach(btn => {
+                    const type = btn.dataset.type;
+                    btn.setAttribute('onclick', `updateQuizzIndicatorType(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, '${type}')`);
+                });
+
+                card.querySelectorAll('.feedback-option-btn-small[data-option="in"], .feedback-option-btn-small[data-option="out"]').forEach(btn => {
+                    const direction = btn.dataset.option;
+                    btn.setAttribute('onclick', `updateQuizzIndicatorDirection(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, '${direction}')`);
+                });
+
+                card.querySelectorAll('.feedback-option-btn-small[data-option="vertical"], .feedback-option-btn-small[data-option="horizontal"]').forEach(btn => {
+                    const orientation = btn.dataset.option;
+                    btn.setAttribute('onclick', `updateQuizzIndicatorOrientation(${topicIndex}, ${quizzIndex}, ${indicatorIndex}, '${orientation}')`);
+                });
+
+                updateQuizzIndicatorDisplayTitle(topicIndex, quizzIndex, indicatorIndex);
+            });
+        }
+
+        function updateQuizzIndicatorType(topicIndex, quizzIndex, indicatorIndex, type) {
+            const indicatorCard = getQuizzIndicatorCard(topicIndex, quizzIndex, indicatorIndex);
+            if (!indicatorCard) return;
+
+            indicatorCard.querySelectorAll('.feedback-type-btn[data-type]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.type === type);
+            });
+
+            const optionsDiv = indicatorCard.querySelector(`[id^="quizz-indicator-options-"]`);
+            if (optionsDiv) optionsDiv.style.display = type === 'point' ? 'flex' : 'none';
+
+            const clearBtn = indicatorCard.querySelector(`[id^="clear-quizz-indicator-"]`);
+            if (clearBtn) clearBtn.style.display = 'inline-block';
+
+            buildQuizzIndicatorPrefab(topicIndex, quizzIndex, indicatorIndex);
+        }
+
+        function clearQuizzIndicatorType(topicIndex, quizzIndex, indicatorIndex) {
+            const indicatorCard = getQuizzIndicatorCard(topicIndex, quizzIndex, indicatorIndex);
+            if (!indicatorCard) return;
+
+            indicatorCard.querySelectorAll('.feedback-type-btn[data-type]').forEach(btn => {
                 btn.classList.remove('active');
             });
 
-            // Cacher les options
-            const optionsDiv = document.getElementById(`quizz-indicator-options-${topicIndex}-${quizzIndex}`);
-            if (optionsDiv) {
-                optionsDiv.style.display = 'none';
+            const optionsDiv = indicatorCard.querySelector(`[id^="quizz-indicator-options-"]`);
+            if (optionsDiv) optionsDiv.style.display = 'none';
+
+            const clearBtn = indicatorCard.querySelector(`[id^="clear-quizz-indicator-"]`);
+            if (clearBtn) clearBtn.style.display = 'none';
+
+            const hiddenInput = indicatorCard.querySelector(`input[id^="quizzIndicatorPrefab-"]`);
+            if (hiddenInput) hiddenInput.value = '[]';
+
+            const quiz = jsonData.process.topics[topicIndex]?.quizzes[quizzIndex];
+            if (quiz && quiz.quizIndicators && quiz.quizIndicators[indicatorIndex]) {
+                quiz.quizIndicators[indicatorIndex].indicatorPrefab = [];
             }
 
-            // Cacher le bouton Annuler
-            const clearBtn = document.getElementById(`clear-quizz-indicator-${topicIndex}-${quizzIndex}`);
-            if (clearBtn) {
-                clearBtn.style.display = 'none';
-            }
-
-            // Mettre à jour le prefab avec un tableau vide
-            const hiddenInput = document.getElementById(`quizzIndicatorPrefab-${topicIndex}-${quizzIndex}`);
-            if (hiddenInput) {
-                hiddenInput.value = '[]';
-            }
-
-            // Mettre à jour le modèle
-            if (jsonData.process.topics[topicIndex] && jsonData.process.topics[topicIndex].quizzes[quizzIndex]) {
-                if (jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators && 
-                    jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators[0]) {
-                    jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators[0].indicatorPrefab = [];
-                }
-            }
+            updateQuizzIndicatorDisplayTitle(topicIndex, quizzIndex, indicatorIndex);
         }
 
-        function toggleQuizzPosRot(topicIndex, quizzIndex) {
-            const content = document.getElementById(`quizz-posrot-content-${topicIndex}-${quizzIndex}`);
-            const toggleBtn = document.getElementById(`quizz-posrot-toggle-${topicIndex}-${quizzIndex}`);
+        function toggleQuizzPosRot(topicIndex, quizzIndex, indicatorIndex) {
+            const content = document.getElementById(`quizz-posrot-content-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
+            const toggleBtn = document.getElementById(`quizz-posrot-toggle-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
             if (!content || !toggleBtn) return;
 
             const isClosed = content.style.display === 'none' || content.style.display === '';
@@ -2554,109 +2731,79 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
             toggleBtn.textContent = isClosed ? 'Position & rotation ▲' : 'Position & rotation ▼';
         }
 
-        function updateQuizzIndicatorDirection(topicIndex, quizzIndex, direction) {
-            const quizzDiv = document.getElementById(`quizz-${topicIndex}-${quizzIndex}`);
-            if (!quizzDiv) return;
+        function updateQuizzIndicatorDirection(topicIndex, quizzIndex, indicatorIndex, direction) {
+            const indicatorCard = getQuizzIndicatorCard(topicIndex, quizzIndex, indicatorIndex);
+            if (!indicatorCard) return;
 
-            // Mettre à jour les boutons actifs - exclure ceux dans les feedbacks
-            const allButtons = Array.from(quizzDiv.querySelectorAll('[data-option="in"], [data-option="out"]'));
-            const feedbacksContainer = document.getElementById(`feedbacks-container-${topicIndex}-${quizzIndex}`);
-            const directionButtons = allButtons.filter(btn => !feedbacksContainer || !feedbacksContainer.contains(btn));
-            
-            directionButtons.forEach(btn => {
+            indicatorCard.querySelectorAll('[data-option="in"], [data-option="out"]').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.option === direction);
             });
 
-            buildQuizzIndicatorPrefab(topicIndex, quizzIndex);
+            buildQuizzIndicatorPrefab(topicIndex, quizzIndex, indicatorIndex);
         }
 
-        function updateQuizzIndicatorOrientation(topicIndex, quizzIndex, orientation) {
-            const quizzDiv = document.getElementById(`quizz-${topicIndex}-${quizzIndex}`);
-            if (!quizzDiv) return;
+        function updateQuizzIndicatorOrientation(topicIndex, quizzIndex, indicatorIndex, orientation) {
+            const indicatorCard = getQuizzIndicatorCard(topicIndex, quizzIndex, indicatorIndex);
+            if (!indicatorCard) return;
 
-            // Mettre à jour les boutons actifs - exclure ceux dans les feedbacks
-            const allButtons = Array.from(quizzDiv.querySelectorAll('[data-option="vertical"], [data-option="horizontal"]'));
-            const feedbacksContainer = document.getElementById(`feedbacks-container-${topicIndex}-${quizzIndex}`);
-            const orientationButtons = allButtons.filter(btn => !feedbacksContainer || !feedbacksContainer.contains(btn));
-            
-            orientationButtons.forEach(btn => {
+            indicatorCard.querySelectorAll('[data-option="vertical"], [data-option="horizontal"]').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.option === orientation);
             });
 
-            buildQuizzIndicatorPrefab(topicIndex, quizzIndex);
+            buildQuizzIndicatorPrefab(topicIndex, quizzIndex, indicatorIndex);
         }
 
-        function toggleQuizzIndicatorDistance(topicIndex, quizzIndex) {
-            const btn = document.getElementById(`quizz-distance-btn-${topicIndex}-${quizzIndex}`);
+        function toggleQuizzIndicatorDistance(topicIndex, quizzIndex, indicatorIndex) {
+            const btn = document.getElementById(`quizz-distance-btn-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
             if (!btn) return;
 
-            // Basculer entre 'non' et 'oui'
             const currentValue = btn.dataset.option;
             const newValue = currentValue === 'non' ? 'oui' : 'non';
             btn.dataset.option = newValue;
             btn.textContent = newValue === 'non' ? 'Non' : 'Oui';
-            
-            // Ajouter la classe active quand c'est "Oui", la retirer sinon
-            if (newValue === 'oui') {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
 
-            buildQuizzIndicatorPrefab(topicIndex, quizzIndex);
+            btn.classList.toggle('active', newValue === 'oui');
+
+            buildQuizzIndicatorPrefab(topicIndex, quizzIndex, indicatorIndex);
         }
 
-        function buildQuizzIndicatorPrefab(topicIndex, quizzIndex) {
-            const quizzDiv = document.getElementById(`quizz-${topicIndex}-${quizzIndex}`);
-            if (!quizzDiv) return;
+        function buildQuizzIndicatorPrefab(topicIndex, quizzIndex, indicatorIndex) {
+            const indicatorCard = getQuizzIndicatorCard(topicIndex, quizzIndex, indicatorIndex);
+            if (!indicatorCard) return;
 
-            // Récupérer les valeurs sélectionnées - exclure les boutons dans les feedbacks
-            const allTypeButtons = Array.from(quizzDiv.querySelectorAll('.feedback-type-btn'));
-            const feedbacksContainer = document.getElementById(`feedbacks-container-${topicIndex}-${quizzIndex}`);
-            const typeButtons = allTypeButtons.filter(btn => !feedbacksContainer || !feedbacksContainer.contains(btn));
-            const activeTypeBtn = typeButtons.find(btn => btn.classList.contains('active'));
+            const activeTypeBtn = indicatorCard.querySelector('.feedback-type-btn[data-type].active');
             const type = activeTypeBtn?.dataset.type || 'point';
-            
+
             let prefabArray;
-
-            // Seul "point" utilise direction/orientation/distance
             if (type === 'point') {
-                const allDirectionButtons = Array.from(quizzDiv.querySelectorAll('[data-option="in"], [data-option="out"]'));
-                const directionButtons = allDirectionButtons.filter(btn => !feedbacksContainer || !feedbacksContainer.contains(btn));
-                const activeDirectionBtn = directionButtons.find(btn => btn.classList.contains('active'));
-                const direction = activeDirectionBtn?.dataset.option || 'out';
-                
-                const allOrientationButtons = Array.from(quizzDiv.querySelectorAll('[data-option="vertical"], [data-option="horizontal"]'));
-                const orientationButtons = allOrientationButtons.filter(btn => !feedbacksContainer || !feedbacksContainer.contains(btn));
-                const activeOrientationBtn = orientationButtons.find(btn => btn.classList.contains('active'));
-                const orientation = activeOrientationBtn?.dataset.option || 'horizontal';
-                
-                const distanceBtn = document.getElementById(`quizz-distance-btn-${topicIndex}-${quizzIndex}`);
+                const direction = indicatorCard.querySelector('[data-option="in"].active, [data-option="out"].active')?.dataset.option || 'out';
+                const orientation = indicatorCard.querySelector('[data-option="vertical"].active, [data-option="horizontal"].active')?.dataset.option || 'horizontal';
+                const distanceBtn = document.getElementById(`quizz-distance-btn-${topicIndex}-${quizzIndex}-${indicatorIndex}`);
                 const hasDistance = distanceBtn?.dataset.option === 'oui';
-
-                // Construire le tableau prefab: ["point", "out", "horizontal"] ou ["point", "out", "horizontal", "distance"]
                 prefabArray = [type, direction, orientation];
-                if (hasDistance) {
-                    prefabArray.push('distance');
-                }
+                if (hasDistance) prefabArray.push('distance');
             } else {
-                // Pour zone, niveau, aplomb : juste le nom du type
                 prefabArray = [type];
             }
 
-            // Mettre à jour l'input hidden (on stocke le tableau en JSON)
-            const hiddenInput = document.getElementById(`quizzIndicatorPrefab-${topicIndex}-${quizzIndex}`);
-            if (hiddenInput) {
-                hiddenInput.value = JSON.stringify(prefabArray);
+            const hiddenInput = indicatorCard.querySelector(`input[id^="quizzIndicatorPrefab-"]`);
+            if (hiddenInput) hiddenInput.value = JSON.stringify(prefabArray);
+
+            const quiz = jsonData.process.topics[topicIndex]?.quizzes[quizzIndex];
+            if (quiz) {
+                if (!Array.isArray(quiz.quizIndicators)) quiz.quizIndicators = [];
+                if (!quiz.quizIndicators[indicatorIndex]) {
+                    quiz.quizIndicators[indicatorIndex] = {
+                        indicatorPrefab: [],
+                        indicatorPrefabScale: '1',
+                        indicatorPos: { x: 0, y: 0, z: 0 },
+                        indicatorRot: { x: 0, y: 0, z: 0 }
+                    };
+                }
+                quiz.quizIndicators[indicatorIndex].indicatorPrefab = prefabArray;
             }
 
-            // Mettre à jour le JSON
-            if (jsonData.process.topics[topicIndex]?.quizzes[quizzIndex]) {
-                if (!jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators) {
-                    jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators = [{}];
-                }
-                jsonData.process.topics[topicIndex].quizzes[quizzIndex].quizIndicators[0].indicatorPrefab = prefabArray;
-            }
+            updateQuizzIndicatorDisplayTitle(topicIndex, quizzIndex, indicatorIndex);
         }
 
         // Fonctions pour gérer les boutons de feedback
@@ -3214,6 +3361,7 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                     if (!name) return;
                     let newName = name
                         .replace(/quizz\[\d+\]\[\d+\]/g, `quizz[${topicIndex}][${j}]`)
+                        .replace(/quizIndicators\[\d+\]\[\d+\]\[(\d+)\]/g, `quizIndicators[${topicIndex}][${j}][$1]`)
                         .replace(/feedback\[\d+\]\[\d+\]\[(\d+)\]/g, `feedback[${topicIndex}][${j}][$1]`)
                         .replace(/ordered\[\d+\]\[\d+\]\[(\d+)\]/g, `ordered[${topicIndex}][${j}][$1]`);
                     elem.setAttribute('name', newName);
@@ -3232,6 +3380,12 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                 const addChoiceBtn = quizz.querySelector('.btn.btn-add.center');
                 if (addChoiceBtn) {
                     addChoiceBtn.setAttribute('onclick', `addFeedback(${topicIndex}, ${j})`);
+                }
+
+                const indicatorsContainer = quizz.querySelector(`[id^="quizz-indicators-container-"]`);
+                if (indicatorsContainer) {
+                    indicatorsContainer.id = `quizz-indicators-container-${topicIndex}-${j}`;
+                    updateQuizzIndicatorsIndexes(topicIndex, j);
                 }
 
                 // Title display + rebind input listener with nouvel index
@@ -3454,33 +3608,41 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                         // Ne traiter que les quizz valides avec au moins un titre
                         if (!quizQuestionElem) continue;
                         
-                        // Parser le quizzIndicatorPrefab JSON array
-                        const quizzIndicatorPrefabElem = document.getElementById(`quizzIndicatorPrefab-${i}-${j}`);
-                        let quizzIndicatorPrefabValue;
-                        try {
-                            quizzIndicatorPrefabValue = quizzIndicatorPrefabElem ? JSON.parse(quizzIndicatorPrefabElem.value) : [];
-                        } catch (e) {
-                            quizzIndicatorPrefabValue = [];
+                        const quizzIndicatorsContainer = document.getElementById(`quizz-indicators-container-${i}-${j}`);
+                        const quizzIndicatorsValue = [];
+                        if (quizzIndicatorsContainer) {
+                            for (let k = 0; k < quizzIndicatorsContainer.children.length; k++) {
+                                const indicatorCard = quizzIndicatorsContainer.children[k];
+                                const prefabElem = indicatorCard.querySelector(`input[id^="quizzIndicatorPrefab-"]`);
+                                let indicatorPrefabValue;
+                                try {
+                                    indicatorPrefabValue = prefabElem ? JSON.parse(prefabElem.value) : [];
+                                } catch (e) {
+                                    indicatorPrefabValue = [];
+                                }
+
+                                quizzIndicatorsValue.push({
+                                    indicatorPrefab: indicatorPrefabValue,
+                                    indicatorPrefabScale: document.querySelector(`input[name="quizIndicators[${i}][${j}][${k}].indicatorPrefabScale"]`)?.value || "1",
+                                    indicatorPos: {
+                                        x: parseInt(document.querySelector(`input[name="quizIndicators[${i}][${j}][${k}].indicatorPos.x"]`)?.value) || 0,
+                                        y: parseInt(document.querySelector(`input[name="quizIndicators[${i}][${j}][${k}].indicatorPos.y"]`)?.value) || 0,
+                                        z: parseInt(document.querySelector(`input[name="quizIndicators[${i}][${j}][${k}].indicatorPos.z"]`)?.value) || 0
+                                    },
+                                    indicatorRot: {
+                                        x: parseInt(document.querySelector(`input[name="quizIndicators[${i}][${j}][${k}].indicatorRot.x"]`)?.value) || 0,
+                                        y: parseInt(document.querySelector(`input[name="quizIndicators[${i}][${j}][${k}].indicatorRot.y"]`)?.value) || 0,
+                                        z: parseInt(document.querySelector(`input[name="quizIndicators[${i}][${j}][${k}].indicatorRot.z"]`)?.value) || 0
+                                    }
+                                });
+                            }
                         }
                         
                         const quizz = {
                             quizQuestion: quizQuestionElem.value,
                             quizNote: quizNoteElem ? quizNoteElem.value : "",
                             quizChoices: [],
-                            quizIndicators: [{
-                                indicatorPrefab: quizzIndicatorPrefabValue,
-                                indicatorPos: {
-                                    x: parseInt(document.querySelector(`input[name="quizz[${i}][${j}].quizzIndicatorPos.x"]`)?.value) || 0,
-                                    y: parseInt(document.querySelector(`input[name="quizz[${i}][${j}].quizzIndicatorPos.y"]`)?.value) || 0,
-                                    z: parseInt(document.querySelector(`input[name="quizz[${i}][${j}].quizzIndicatorPos.z"]`)?.value) || 0
-                                },
-                                indicatorRot: {
-                                    x: parseInt(document.querySelector(`input[name="quizz[${i}][${j}].quizzIndicatorRot.x"]`)?.value) || 0,
-                                    y: parseInt(document.querySelector(`input[name="quizz[${i}][${j}].quizzIndicatorRot.y"]`)?.value) || 0,
-                                    z: parseInt(document.querySelector(`input[name="quizz[${i}][${j}].quizzIndicatorRot.z"]`)?.value) || 0
-                                },
-                                indicatorPrefabScale: document.querySelector(`input[name="quizz[${i}][${j}].quizzIndicatorPrefabScale"]`)?.value || "1"
-                            }],
+                            quizIndicators: quizzIndicatorsValue,
                             choiceID: j + 1
                         };
 
@@ -3674,107 +3836,34 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
                             const quizNoteInput = document.querySelector(`textarea[name="quizz[${lastIndex}][${lastquizzIndex}].quizNote"]`);
                             if (quizNoteInput) quizNoteInput.value = quizNote;
 
-                            // Charger quizzIndicatorPrefab depuis quizIndicators[0]
-                            let quizzIndicatorPrefabArray;
-                            let quizzIndicatorPrefabScale = "1";
-                            let quizzIndicatorPos = { x: 0, y: 0, z: 0 };
-                            let quizzIndicatorRot = { x: 0, y: 0, z: 0 };
+                            const quizIndicatorsData = Array.isArray(quizz.quizIndicators) && quizz.quizIndicators.length > 0
+                                ? quizz.quizIndicators
+                                : (Array.isArray(quizz.quizzIndicatorPrefab)
+                                    ? [{
+                                        indicatorPrefab: quizz.quizzIndicatorPrefab,
+                                        indicatorPrefabScale: quizz.quizzIndicatorPrefabScale || '1',
+                                        indicatorPos: quizz.quizzIndicatorPos || { x: 0, y: 0, z: 0 },
+                                        indicatorRot: quizz.quizzIndicatorRot || { x: 0, y: 0, z: 0 }
+                                    }]
+                                    : []);
 
-                            if (quizz.quizIndicators && Array.isArray(quizz.quizIndicators) && quizz.quizIndicators[0]) {
-                                // Nouveau format: quizIndicators[0]
-                                const indicator = quizz.quizIndicators[0];
-                                quizzIndicatorPrefabArray = indicator.indicatorPrefab || [];
-                                quizzIndicatorPrefabScale = indicator.indicatorPrefabScale || "1";
-                                quizzIndicatorPos = indicator.indicatorPos || { x: 0, y: 0, z: 0 };
-                                quizzIndicatorRot = indicator.indicatorRot || { x: 0, y: 0, z: 0 };
-                            } else if (Array.isArray(quizz.quizzIndicatorPrefab)) {
-                                // Ancien format: directement sur le quizz
-                                quizzIndicatorPrefabArray = quizz.quizzIndicatorPrefab;
-                                quizzIndicatorPrefabScale = quizz.quizzIndicatorPrefabScale || "1";
-                                quizzIndicatorPos = quizz.quizzIndicatorPos || { x: 0, y: 0, z: 0 };
-                                quizzIndicatorRot = quizz.quizzIndicatorRot || { x: 0, y: 0, z: 0 };
-                            } else {
-                                quizzIndicatorPrefabArray = [];
-                            }
-
-                            // Mettre à jour l'input hidden avec le JSON array
-                            const quizzIndicatorHiddenInput = document.getElementById(`quizzIndicatorPrefab-${lastIndex}-${lastquizzIndex}`);
-                            if (quizzIndicatorHiddenInput) {
-                                quizzIndicatorHiddenInput.value = JSON.stringify(quizzIndicatorPrefabArray);
-                            }
-
-                            // Mettre à jour les boutons UI selon le quizzIndicatorPrefab
-                            const quizzDiv = document.getElementById(`quizz-${lastIndex}-${lastquizzIndex}`);
-                            if (quizzDiv && quizzIndicatorPrefabArray.length > 0) {
-                                const type = quizzIndicatorPrefabArray[0];
-                                
-                                // Activer le bon bouton de type
-                                const typeButtons = quizzDiv.querySelectorAll('.feedback-type-btn');
-                                typeButtons.forEach(btn => {
-                                    btn.classList.toggle('active', btn.dataset.type === type);
-                                });
-
-                                // Pour le type "point", charger direction/orientation/distance
-                                if (type === 'point' && quizzIndicatorPrefabArray.length >= 3) {
-                                    const direction = quizzIndicatorPrefabArray[1] || 'out';
-                                    const orientation = quizzIndicatorPrefabArray[2] || 'horizontal';
-                                    const hasDistance = quizzIndicatorPrefabArray.includes('distance');
-
-                                    // Mettre à jour les boutons direction
-                                    const directionButtons = quizzDiv.querySelectorAll('[data-option="in"], [data-option="out"]');
-                                    directionButtons.forEach(btn => {
-                                        btn.classList.toggle('active', btn.dataset.option === direction);
+                            const indicatorsContainer = document.getElementById(`quizz-indicators-container-${lastIndex}-${lastquizzIndex}`);
+                            if (indicatorsContainer) {
+                                if (indicatorsContainer.children.length === 0 && quizIndicatorsData.length === 0) {
+                                    addQuizzIndicator(lastIndex, lastquizzIndex);
+                                } else if (indicatorsContainer.children.length > 0) {
+                                    applyQuizzIndicatorState(lastIndex, lastquizzIndex, 0, quizIndicatorsData[0] || {
+                                        indicatorPrefab: [],
+                                        indicatorPrefabScale: '1',
+                                        indicatorPos: { x: 0, y: 0, z: 0 },
+                                        indicatorRot: { x: 0, y: 0, z: 0 }
                                     });
-
-                                    // Mettre à jour les boutons orientation
-                                    const orientationButtons = quizzDiv.querySelectorAll('[data-option="vertical"], [data-option="horizontal"]');
-                                    orientationButtons.forEach(btn => {
-                                        btn.classList.toggle('active', btn.dataset.option === orientation);
-                                    });
-
-                                    // Mettre à jour le bouton distance
-                                    const quizzDistanceBtn = document.getElementById(`quizz-distance-btn-${lastIndex}-${lastquizzIndex}`);
-                                    if (quizzDistanceBtn) {
-                                        quizzDistanceBtn.dataset.option = hasDistance ? 'oui' : 'non';
-                                        quizzDistanceBtn.textContent = hasDistance ? 'Oui' : 'Non';
-                                        quizzDistanceBtn.classList.toggle('active', hasDistance);
-                                    }
                                 }
 
-                                // Afficher/masquer les options selon le type
-                                const optionsDiv = document.getElementById(`quizz-indicator-options-${lastIndex}-${lastquizzIndex}`);
-                                if (optionsDiv) {
-                                    optionsDiv.style.display = type === 'point' ? 'flex' : 'none';
-                                }
-
-                                // Afficher le bouton Annuler si un type est sélectionné
-                                const clearBtn = document.getElementById(`clear-quizz-indicator-${lastIndex}-${lastquizzIndex}`);
-                                if (clearBtn) {
-                                    clearBtn.style.display = type ? 'inline-block' : 'none';
+                                for (let indicatorIndex = 1; indicatorIndex < quizIndicatorsData.length; indicatorIndex++) {
+                                    addQuizzIndicator(lastIndex, lastquizzIndex, quizIndicatorsData[indicatorIndex]);
                                 }
                             }
-
-                            // Charger quizzIndicatorPrefabScale, Position et Rotation
-                            const quizzIndicatorPrefabScaleInput = document.querySelector(`input[name="quizz[${lastIndex}][${lastquizzIndex}].quizzIndicatorPrefabScale"]`);
-                            if (quizzIndicatorPrefabScaleInput) quizzIndicatorPrefabScaleInput.value = quizzIndicatorPrefabScale;
-
-                            const quizzIndicatorPosXInput = document.querySelector(`input[name="quizz[${lastIndex}][${lastquizzIndex}].quizzIndicatorPos.x"]`);
-                            if (quizzIndicatorPosXInput) quizzIndicatorPosXInput.value = quizzIndicatorPos.x || 0;
-                            
-                            const quizzIndicatorPosYInput = document.querySelector(`input[name="quizz[${lastIndex}][${lastquizzIndex}].quizzIndicatorPos.y"]`);
-                            if (quizzIndicatorPosYInput) quizzIndicatorPosYInput.value = quizzIndicatorPos.y || 0;
-                            
-                            const quizzIndicatorPosZInput = document.querySelector(`input[name="quizz[${lastIndex}][${lastquizzIndex}].quizzIndicatorPos.z"]`);
-                            if (quizzIndicatorPosZInput) quizzIndicatorPosZInput.value = quizzIndicatorPos.z || 0;
-
-                            const quizzIndicatorRotXInput = document.querySelector(`input[name="quizz[${lastIndex}][${lastquizzIndex}].quizzIndicatorRot.x"]`);
-                            if (quizzIndicatorRotXInput) quizzIndicatorRotXInput.value = quizzIndicatorRot.x || 0;
-                            
-                            const quizzIndicatorRotYInput = document.querySelector(`input[name="quizz[${lastIndex}][${lastquizzIndex}].quizzIndicatorRot.y"]`);
-                            if (quizzIndicatorRotYInput) quizzIndicatorRotYInput.value = quizzIndicatorRot.y || 0;
-                            
-                            const quizzIndicatorRotZInput = document.querySelector(`input[name="quizz[${lastIndex}][${lastquizzIndex}].quizzIndicatorRot.z"]`);
-                            if (quizzIndicatorRotZInput) quizzIndicatorRotZInput.value = quizzIndicatorRot.z || 0;
 
                             // Synchronise le titre du quizz dans le header
                             var quizzDisplay = document.getElementById(`quizz-title-display-${lastIndex}-${lastquizzIndex}`);
@@ -4038,5 +4127,3 @@ Si inactif : l'hologramme principal sera remplacé le temps du Topic">
 </body>
 
 </html>
-
-

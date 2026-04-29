@@ -1094,10 +1094,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="calibrateAfterStepID" title="ℹ️ Après quelle étape (N° ID) l'utilisateur doit-il positionner l'hologramme">
+                            <label for="calibrateAfterStageID" title="ℹ️ Après quelle étape (N° ID) l'utilisateur doit-il positionner l'hologramme">
                                 Calibration <span class="icon-color">ℹ️</span>
                             </label>
-                            <input type="number" id="calibrateAfterStepID" name="settings.calibrateAfterStepID" placeholder="Aucune (début de procédure)" step="1">
+                            <input type="number" id="calibrateAfterStageID" name="settings.calibrateAfterStageID" placeholder="Aucune (début de procédure)" step="1">
                         </div>
 
                     </div>
@@ -1293,7 +1293,7 @@
                 ownerIdentifier: "",
                 appVersion: "",
                 chapter: "",
-                calibrateAfterStepID: "",
+                calibrateAfterStageID: "",
                 unit: "mm",
                 langCode: "",
                 creatorID: 0
@@ -3206,7 +3206,7 @@
                     ownerIdentifier: document.getElementById('ownerIdentifier').value,
                     appVersion: document.getElementById('appVersion').value,
                     chapter: document.getElementById('chapter').value,
-                    calibrateAfterStepID: parseInt(document.getElementById('calibrateAfterStepID').value) || 0,
+                    calibrateAfterStageID: parseInt(document.getElementById('calibrateAfterStageID').value) || 0,
                     unit: document.getElementById('unit').value,
                     langCode: document.getElementById('langCode').value,
                     creatorID: parseInt(document.getElementById('creatorID').value) || 0
@@ -3439,7 +3439,7 @@
             document.getElementById('ownerIdentifier').value = data.settings?.ownerIdentifier || '';
             document.getElementById('appVersion').value = data.settings?.appVersion || '';
             document.getElementById('chapter').value = data.settings?.chapter || '';
-            document.getElementById('calibrateAfterStepID').value = data.settings?.calibrateAfterStepID || '';
+            document.getElementById('calibrateAfterStageID').value = data.settings?.calibrateAfterStageID || '';
             document.getElementById('unit').value = data.settings?.unit || 'mm';
             document.getElementById('langCode').value = data.settings?.langCode || '';
             document.getElementById('creatorID').value = data.settings?.creatorID || 0;
@@ -3729,7 +3729,7 @@
                         ownerIdentifier: "",
                         appVersion: "",
                         chapter: "",
-                        calibrateAfterStepID: "",
+                        calibrateAfterStageID: "",
                         unit: "mm",
                         langCode: ""
                     },
@@ -3773,5 +3773,4 @@
         }
     </script>
 </body>
-
 </html>
