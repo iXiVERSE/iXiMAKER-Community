@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iXiMAKER Community - VARIANT</title>
+</head>
+
+<body>
+    <div class="container">
+        <!--HEADER-->
+        <div class="header">
+            <div class="header-logo">
+                <a href="https://ixiverse.com" title="Site officiel" target="_blank">
+                    <img src="iXiVERSE-LOGO-CLR.png" alt="iXiVERSE" style="height:50px;"></a><br>
+                <!--<p class="smallText">1st Open source solution<br>for spatialized contents</p>-->
+                <p class="smallText">1ere solution de création<br><b>No-Code & Open source</b><br>pour contenus XR/VR/AR</p>
+            </div>
+
+            <h1><span class="material-symbols-outlined" style="font-size: 2rem; vertical-align: middle;">graph_8</span> iXiMAKER <span class="tagTitle">Community</span> Variant</h1>
+            <p>Interface de création et d'édition pour les <strong>variantes</strong> au standard iXi</p>
+        </div>
+
+        <!-- GLOBAL TOP NAV BAR (DARK BLUE FRAME) -->
+        <div class="global-nav">
+            <a href="iXiMAKER-Variant.html" class="global-nav-item active">Variante</a>
+            <a href="#" onclick="headerNavigate('iXiMAKER-Work.html'); return false;" class="global-nav-item">Procédures</a>
+            <a href="#" onclick="headerNavigate('iXiMAKER-Learn.html'); return false;" class="global-nav-item">Evaluations</a>
+        </div>
+
+        <!-- BANNER FOR SHARED VARIANT DATA -->
+        <div id="shared-variant-banner" class="banner">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="material-symbols-outlined" style="color: var(--blue-darker); font-size: 1.5rem;">layers</span>
+                <span class="banner-text">
+                    <span id="shared-variant-reference">Référentiel</span>
+                    <span id="shared-variant-title">Aucune</span> 
+                    <span id="shared-variant-info" style="font-size: smaller; color: var(--grey-dark); opacity: 0.8; margin-left: 8px;">N/A</span>
+                </span>
+            </div>
+            <button type="button" class="btn btn-remove" onclick="clearSharedVariant()" >
+                ✕ Effacer
+            </button>
+        </div>
+
+        <!--TABS-->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('home')">
+                <span class="material-symbols-outlined">home</span>
+                Accueil</button>
+            <button class="tab" onclick="showTab('settings')">
+                <span class="material-symbols-outlined">tune</span>
+                Paramètres</button>
+            <!--<button class="tab" onclick="showTab('import-export')">
+            <button class="tab" onclick="showTab('import-export')" hidden>
+                <span class="material-symbols-outlined">swap_vert</span>
+                Import/Export</button>-->
+        </div>
+
+        <form id="jsonForm">
+            <!-- Tab Home -->
+            <div id="home" class="tab-content active">
+                <div class="section" alt="Bienvenue">
+                    <h2><span class="material-symbols-outlined">waving_hand</span> Bienvenue dans iXiMAKER Community</h2>
+                    <p>
+                        Cet éditeur vous permet de <b>créer et de modifier</b> vos contenus XR.<br>
+                        Utilisez les onglets ci-dessus pour naviguer entre les différentes sections de l'éditeur.
+                    </p>
+                    <ul>
+                        <li><strong class="focus-darker">Variante :</strong>
+                            Gère les paramètres de la variante actuelle.</li>
+                            <ul>
+                                <li><strong><span class="material-symbols-outlined focus">home</span> Accueil :</strong>
+                                Cette page.</li>
+                                <li><strong><span class="material-symbols-outlined focus">tune</span> Paramètres :</strong>
+                                Informations spécifiques de la variante (Référentiel parent, nom et description, zone de travail, hologramme principal, etc.).
+                                <br>Regroupe les paramètres communs aux procédures et aux formations</li>
+                            </ul>
+                        <li><strong class="focus-darker">Procédures :</strong>
+                            Gère le contenu des différentes procédures de la variante actuelle.</li>
+                        <li><strong class="focus-darker">Évaluations :</strong>
+                            Gère le contenu des différentes évaluations de la variante actuelle</li>
+                    </ul>
+                    <div class="section">
+					    <h2><span class="material-symbols-outlined">data_check</span> Préparation</h2>
+                        <h3><span class="material-symbols-outlined">counter_1</span> Création de la structure de dossiers</h3>
+					    <p><u>Créez les 3 dossiers</u> comme indiqué, ci-dessous. <i>(Voir la section <b>"Aide"</b> pour plus de détails)</i></p>
+
+                        <ul class="small">
+                            <li><b>📁Nom du référentiel</b>
+                                <ul>
+                                    <li><b>📁Nom de la Variante</b>
+                                        <ul>
+                                            <li><b>📁learn</b></li>
+                                        </ul>
+                                    </li>
+                                    <li>📁Autre Variante...</li>
+                                        <ul>
+                                            <li>📁learn</li>
+                                        </ul>
+                                </ul>
+                            </li>
+						</ul>
+
+						<h3><span class="material-symbols-outlined">counter_2</span> Préparation des médias</h3>
+						<h4>Sélectionnez les médias...</h4>
+							<ul>
+								<li><b>Images</b> : format jpg, png ou gif (Taille conseillée : 2048px)</li>
+								<li><b>Audios</b> : format ogg ou mp3</li>
+								<li><b>Modèles 3D</b> : format glb ou gltf avec textures incluses (10Mo max - 4Mo conseillé)</li>
+							</ul>
+						<p>⚠️ <i>Les noms de fichiers et de dossier ne doivent pas contenir de caractères spéciaux, ni accentués tels que :</i> <b>(&é~#à%*$ê/!_\/)</b></p>
+                        <h4>... puis copiez-les dans les dossiers suivants : </h4>
+                        <ul>
+                            <li><b>Pour les procédures</b> : Copier ses médias dans le dossier de <b>variante</b> <i>(📂MonReferentiel/📂MaVariante)></i></li>
+                            <li><b>Pour les évaluations</b> : Copier ses médias dans le dossier <b>"learn"</b> de variante <i>(📂MonReferentiel/📂MaVariante/📂learn)</i></li>
+                        </ul>
+                    </div>
+                        
+                        <div class="section" alt="Pour commencer">
+                        <h2><span class="material-symbols-outlined">sports_score</span> Pour commencer</h2>
+                        <h3><span class="material-symbols-outlined">counter_1</span> Renseignez les paramètres de votre variante</h3>
+                        <ul>
+                            <li>Cliquez sur l'onglet "Paramètres" pour éditer de votre variante.</li>
+                            <li>Une fois terminé, sélectionnez <span class="btn-primary btnXS small "><span class="material-symbols-outlined small">book</span> Création de procédures </span> 
+                                ou <span class="btn-primary btnXS small "><span class="material-symbols-outlined small">school</span> Création d'évaluations </span></span><br>
+                            <!--(⚠️le nom de la variante doit être exactement le même que votre dossier)<br>-->
+                            </li>
+                        </ul>
+                        <h3><span class="material-symbols-outlined">edit</span> Pour les modifications</h3>
+						<p>Si vous souhaitez éditer un fichier existant :</p>
+                        <ul>
+                            <li>Cliquez sur l'onglet "Import/Export" de la section <b>Procédures</b> ou <b>Évaluations</b> <i>(En fonction du fichier JSON)</i></li>
+							<li>Importez le fichier JSON via le bouton <span class="btn-primary btnXS success-btn small ">📥Importer</span> </li>
+							<li>Suivez les indications de la section <b>"Pour commencer"</b></li>
+                        </ul>
+                        <p><b>👉N'oubliez pas de sauvegarder régulièrement votre travail</b><br>
+                        <ul>
+                            <li>Rendez-vous dans les sections <b>Procédures</b> ou <b>Évaluations</b></li>
+                            <li>Cliquez sur <span class="btn-primary btnXS small ">💾 Sauvegarder</span>
+                        depuis l'onglet <b>"Import/Export"</b>.</li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h2><span class="material-symbols-outlined focus">support</span> Aide</h2>
+                        <h3>Fonctionnement</h3>
+                        <p>iXiMAKER Community est un éditeur visuel pour vous assister dans l'édition et la création de fichiers
+                            JSON iXi.<br>
+                            <b>🆗 Il permet :</b>
+                        </p>
+                        <ul>
+                            <li>de simplifier la création de contenu XR</li>
+							<li>d'y associer les liens vers les fichiers média</li>
+                            <li>de créer des fichiers JSON conformes au format iXi</li>
+                            <li>d'importer et de modifier des fichiers JSON conformes au format iXi</li>
+                        </ul>
+                        <p><b>🚫 Il ne permet pas :</b></p>
+                        <ul>
+                            <li>de copier un fichier media dans le dossier (Version pro)</li>
+                            <li>de spatialiser vos contenus (c'est le rôle de "iXiWORK - Place", gratuit)</li>
+                            <li>de créer les dossiers de structure (Version pro)</li>
+                        </ul>
+                        <h3>Structure des fichiers au standard iXi</h3>
+                        <p>Pour fonctionner, les dossiers et fichiers doivent respecter l'organisation suivante :</p>
+                        <ul class="small">
+                            <li><b>📁Nom du référentiel</b>
+                                <ul>
+                                    <li><b>📁Variante</b>
+                                        <ul>
+                                            <li><b>Referentiel_Variante.json</b> (fichier des procédures qui va être créé)</li>
+                                            <li><b>🧊modele1.bytes</b> (les modèles 3D au format .glb ou .gltf, renommés en .bytes)</li>
+                                            <li><b>🖼️Image1.png</b> (Les images au format .png ou /jpg)</li>
+                                            <li><b>🔊Audio1.ogg</b> (les fichiers audio au format .ogg ou .mp3)</li>
+
+                                            <li><b>📁learn</b></li>
+                                            <ul>
+                                                <li><b>📔Referentiel_Variante_learn.json</b> (fichier des évaluations qui va être créé</li>
+                                                <li><b>🧊modele1.bytes</b> (modèles additionnels)</li>
+                                                <li><b>🖼️Image1.png</b></li>
+                                                <li><b>🔊Audio1.ogg</b></li>
+                                            </ul>
+                                        </ul>
+                                    </li>
+                                    <li><b>📁Variante2...</b></li>
+                                </ul>
+                            </li>
+						</ul>
+                    </div>
+				</div>
+			</div>
+
+                <!-- Tab Settings -->
+            <div id="settings" class="tab-content">
+                <div class="section" alt="Variantes">
+                    <!-- Hidden values for IXI standard compliance -->
+                    <input type="hidden" id="usage" name="usage"
+                        value="File of all the steps and actions related to a procedure. Contains all the operations that can be carried out, organized into stages, steps and actions.">
+                    <input type="hidden" id="unit" name="settings.unit" value="mm">
+                    <input type="hidden" id="appVersion" name="settings.appVersion" value="iXiMAKER-Community-1.1">
+                    <h2>Paramètres de la variante</h2>
+
+                    <div class="variants-grid">
+                        <!-- Colonne Gauche -->
+                        <div class="variants-col">
+                            <!-- Titre & Code pays -->
+                            <div class="form-row" style="display: flex; gap: 15px; align-items: flex-end; margin-top: 0;">
+                                <!-- Référentiel -->
+                                <div class="form-group" style="margin-top: 0;"
+                                    title="ℹ️ Nom du Référentiel parent (Dossier racine), &#10;qui contient les différentes variantes de procédures et d'évaluations'.">
+                                    <label for="chapter">
+                                        Référentiel <span class="icon-color">ℹ️</span>
+                                    </label>
+                                    <input type="text" id="chapter" name="settings.chapter" placeholder="ex: Machine XYZ">
+                                </div>
+
+                                <div class="form-group" style="flex: 1 2 200px;">
+                                    <label for="processTitle"
+                                        title="ℹ️ Titre de cette variante,&#10;tel qu'il apparaîtra dans le menu après avoir sélectionné le Référentiel.&#10;👉 Définit la version, la variation.">
+                                        Nom de la variante <span class="icon-color">ℹ️</span>
+                                    </label>
+                                    <input type="text" id="processTitle" name="process.processTitle"
+                                        placeholder="ex: Grand format, Version 15, etc.">
+                                </div>
+                                <div class="form-group" style="flex: 0 2 100px;">
+                                    <label for="langCode" title="ℹ️ Code Pays de la langue utilisée&#10; au format ISO (ex: FR, EN, ES,...).">
+                                        Code pays <span class="icon-color">ℹ️</span>
+                                    </label>
+                                    <input type="text" id="langCode" name="settings.langCode" placeholder="FR"
+                                        style="text-transform: uppercase; width: 100%;" oninput="this.value = this.value.toUpperCase()"
+                                        maxlength="2" value="FR">
+                                </div>
+                            </div>
+                            <!-- Hologramme principal -->
+                            <div class="form-group" style="margin-top: 0;"
+                                title="ℹ️ Nom exact du modèle 3D principal au format .glb ou gltf &#10;👉 Permet de visualiser l'hologramme de l'objet en plus du tracé de la zone de travail.">
+                                <label for="mainHologram">
+                                    Hologramme principal (.glb) <span class="icon-color">ℹ️</span>
+                                </label>
+                                <div class="file-input-wrapper">
+                                    <input type="text" id="mainHologram" name="process.mainHologram"
+                                        placeholder="Aucun nom de fichier">
+                                    <input type="file" id="mainHologram-file" accept=".glb,.gltf">
+                                    <button type="button" class="file-button"
+                                        title="ℹ️ Permet de récupérer le nom du fichier sans avoir à le saisir manuellement.&#10;👉 Si vide, un hologramme correspondant à la zoen de travail sera généré automatiquement."
+                                        onclick="document.getElementById('mainHologram-file').click()">
+                                        🔎 Choisir un fichier
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Colonne Droite -->
+                        <div class="variants-col">
+                            <!-- Description -->
+                            <div class="form-group" style="margin-top: 0;">
+                                <label for="processDesc" title="ℹ️ Détails des objectifs et rôles de cette procédure.">
+                                    Description <span class="icon-color">ℹ️</span>
+                                </label>
+                                <textarea id="processDesc" name="process.processDesc"
+                                    placeholder="Cette variante contient les procédures et les évaluations de la machine XYZ - Grand Format..." style="height: 115px; min-height: 115px; resize: vertical;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="contentVersion" name="settings.contentVersion" value="">
+                    <input type="hidden" id="creatorID" name="settings.creatorID" value="0">
+                    <input type="hidden" id="ownerName" name="settings.ownerName" value="">
+                    <input type="hidden" id="ownerIdentifier" name="settings.ownerIdentifier" value="">
+                    <input type="hidden" id="calibrateAfterStageID" name="settings.calibrateAfterStageID" value="0">
+
+                    <input type="hidden" name="process.workspaceShapeRot.x" value="0">
+                    <input type="hidden" name="process.workspaceShapeRot.y" value="0">
+                    <input type="hidden" id="workspaceOffsetPosX" name="process.workspaceOffsetPos.x" step="any">
+                    <input type="hidden" id="workspaceOffsetPosZ" name="process.workspaceOffsetPos.z" step="any">
+                    <input type="hidden" id="workspaceOffsetPosY" name="process.workspaceOffsetPos.y" step="any">
+                    <!--------------------------------------------------->
+                    <!-------------------ZONE DE TRAVAIL ----------------->
+                    <h3 title="Réglage de la zone de travail (workspace)" style="margin-top: 30px;">Zone de travail</h3>
+                    <div class="form-row workspace-row">
+                        <div class="form-group" alt="Forme de la zone">
+                            <label for="workspaceShape"
+                                title="ℹ️ Forme de la zone de travail&#10;👉 Correspond généralement à la forme et la taille de l'hologramme principal">
+                                Forme de la zone <span class="icon-color">ℹ️</span>
+                            </label>
+                            <select id="workspaceShape" name="process.workspaceShape" class="desktop-select-only">
+                                <option value="square">Rectangulaire</option>
+                                <option value="circle">Cylindrique</option>
+                            </select>
+                            <div class="custom-select-container mobile-select-only" id="custom-shape-select">
+                                <div class="custom-select-trigger">
+                                    <span class="custom-select-text">Rectangulaire</span>
+                                    <span class="custom-select-arrow">▼</span>
+                                </div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option active" data-value="square">Rectangulaire</div>
+                                    <div class="custom-option" data-value="circle">Cylindrique</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group dimension-field" alt="Largeur">
+                            <label title="ℹ️ Largeur de la zone de travail en millimètres">L. (mm) <span
+                                    class="icon-color">ℹ️</span></label>
+                            <input type="number" name="process.workspaceShapeSize.x" step="1" placeholder="0">
+                        </div>
+                        <div class="form-group dimension-field" alt="Profondeur">
+                            <label title="ℹ️ Profondeur de la zone de travail en millimètres">P. (mm) <span
+                                    class="icon-color">ℹ️</span></label>
+                            <input type="number" name="process.workspaceShapeSize.z" step="1" placeholder="0">
+                        </div>
+                        <div class="form-group dimension-field" alt="Hauteur">
+                            <label title="ℹ️ Hauteur de la zone de travail en millimètres">H. (mm) <span
+                                    class="icon-color">ℹ️</span></label>
+                            <input type="number" id="inputHauteur" name="process.workspaceShapeSize.y" step="1"
+                                placeholder="0">
+                        </div>
+                        <div class="form-group" alt="Position du tracé">
+                            <label for="workspaceOffsetCalc" id="positionLabel"
+                                title="ℹ️ Position de la zone de travail par rapport à l'hologramme"> <!--Mis à jour via fonction L2456-->
+                                Position de la zone <span class="icon-color">ℹ️</span>
+                            </label>
+                            <div class="position-control-group">
+                                <select id="workspaceOffsetCalc" class="desktop-select-only">
+                                    <option value="auto-low">base</option>
+                                    <option value="auto-mid" selected>milieu</option>
+                                    <option value="auto-high">surface</option>
+                                </select>
+                                <div class="custom-select-container mobile-select-only" id="custom-position-select">
+                                    <div class="custom-select-trigger">
+                                        <span class="custom-select-text">milieu</span>
+                                        <span class="custom-select-arrow">▼</span>
+                                    </div>
+                                    <div class="custom-select-options">
+                                        <div class="custom-option" data-value="auto-low">base</div>
+                                        <div class="custom-option active" data-value="auto-mid">milieu</div>
+                                        <div class="custom-option" data-value="auto-high">surface</div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-collapse" id="workspaceOffsetToggleBtn"
+                                    onclick="toggleWorkspaceOffsetFields()">
+                                    Afficher les décalages personnalisés
+                                </button>
+                            </div>
+                            <div id="workspaceOffsetCustomFields"
+                                style="display: none; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 50px;">
+                                    <label for="workspaceOffsetPosL"
+                                        title="ℹ️ Décalage latérale de la zone de travail (mm)&#10;par rapport à l'hologramme">L (mm)
+                                        <span class="icon-color">ℹ️</span></label>
+                                    <input type="number" id="workspaceOffsetPosL" step="1" value="0">
+                                </div>
+                                <div style="flex: 1; min-width: 50px;">
+                                    <label id="workspaceOffsetPosPLabel" for="workspaceOffsetPosP"
+                                        title="ℹ️ ---">P (mm) <!-- gérer par fonction L2463-->
+                                        <span class="icon-color">ℹ️</span></label>
+                                    <input type="number" id="workspaceOffsetPosP" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" alt="Orientation">
+                            <label for="workspaceShapeRot"
+                                title="ℹ️ Rotation de la zone de travail par rapport à l'hologramme &#10;👉 Horizontale ⇨ plan de travail &#10;👉Verticale ⇨ Mur">
+                                Orientation <span class="icon-color">ℹ️</span>
+                            </label>
+                            <select id="workspaceShapeRot" name="process.workspaceShapeRot.z" class="desktop-select-only">
+                                <option value="0">Horizontale</option>
+                                <option value="90">Verticale</option>
+                            </select>
+                            <div class="custom-select-container mobile-select-only" id="custom-orientation-select">
+                                <div class="custom-select-trigger">
+                                    <span class="custom-select-text">Horizontale</span>
+                                    <span class="custom-select-arrow">▼</span>
+                                </div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option active" data-value="0">Horizontale</div>
+                                    <div class="custom-option" data-value="90">Verticale</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:none;">
+                        <input type="hidden" name="process.workspaceShapeRot.x" step="any">
+                        <input type="hidden" name="process.workspaceShapeRot.y" step="any">
+                        <input type="hidden" name="process.workspaceOffsetRot.x" step="any">
+                        <input type="hidden" name="process.workspaceOffsetRot.y" step="any">
+                        <input type="hidden" name="process.workspaceOffsetRot.z" step="any">
+                    </div>
+                    <div class="section" alt="Transférer la variante vers une autre page">
+                        <div class="form-row import-export-buttons">
+                                <button type="button" class="btn btn-primary" onclick="transferTo('Work')">
+                                    <span class="material-symbols-outlined">book</span> Créer les procédures
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="transferTo('Learn')">
+                                    <span class="material-symbols-outlined">school</span> Créer les évaluations
+                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab Topics (Disabled) -->
+            <div id="topics-container" style="display:none;"></div>
+            <!-- Tab Courses (Disabled) -->
+            <div id="courses-container" style="display:none;"></div>
+
+            <!-- Tab Import/Export -->
+            <div id="import-export" class="tab-content">
+                <div class="section" alt="Import et export JSON">
+                    <h2>Import / export</h2>
+                    <div class="form-row import-export-buttons">
+                        <div class="form-group" title="Générer le JSON Variante pour l'actualiser">
+                            <button type="button" class="btn btn-primary" onclick="generateJSON();">
+                                ♻️ Actualiser
+                            </button>
+                        </div>
+                        <div class="form-group" title="Télécharger votre JSON Variante">
+                            <button type="button" class="btn btn-primary" onclick="exportJSON();">
+                                📤 Exporter
+                            </button>
+                        </div>
+                        <div class="form-group" title="Importer un fichier JSON Variante">
+                            <label for="json-import" class="btn btn-primary success-btn"
+                                style="display:inline-flex; align-items:center; justify-content:center; text-align:center; cursor:pointer; font-size: 1.1rem; font-family: 'Exo 2', sans-serif;">
+                                📥 Importer
+                            </label>
+                            <input type="file" id="json-import" accept=".json" style="display:none;"
+                                onchange="importJSON()">
+                        </div>
+                        <div class="form-group" title="Effacer la variante actuelle">
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                🔄 Réinitialiser
+                            </button>
+                        </div>
+                    </div>
+                    <h4>Contenu du JSON généré</h4>
+                    <textarea id="json-output" rows="15" readonly></textarea>
+                </div>
+
+            </div>
+        </form>
+        </div>
+        <div style="text-align:center; margin-top:10px;" alt="iXiVERSE MiniMaker MPL V2.0">
+            <span class="exo2-regular smallText" style="color: var(--white);">
+                iXiMAKER Community V1.0 est sous licence Mozilla Public Licence 2.0
+            | Utilisez-le librement et n'oubliez pas de créditer <a href="https://ixiverse.com" title="Site officiel" target="_blank" style="color: white; ">iXiVERSE</a> ❤️ 
+            <!--iXiMAKER Community is under Mozilla Public Licence 2.0
+            | Use it freely but don't forget to credit <a href="https://ixiverse.com" title="Site officiel" target="_blank" style="color: white; ">iXiVERSE</a> ❤️-->
+            </span>
+        </div>
+
+    <!----------- FUNCTIONS  ---------------->
+    <script src="iximaker.js"></script>
+    <script src="variant.js"></script>
+</body>
+</html>
