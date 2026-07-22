@@ -425,12 +425,24 @@ function exportJSON() {
 }
 
 // Charger les données dans le formulaire
-function loadDataToForm(data) {
+function loadDataToForm(data, isImporting = false) {
     // Charger les paramètres généraux
     document.getElementById('usage').value = data.usage || '';
     document.getElementById('contentVersion').value = data.settings?.contentVersion || '';
-    document.getElementById('ownerName').value = data.settings?.ownerName || '';
-    document.getElementById('ownerIdentifier').value = data.settings?.ownerIdentifier || '';
+    
+    const importedOwnerName = data.settings?.ownerName || '';
+    const importedOwnerId = data.settings?.ownerIdentifier || '';
+
+    if (importedOwnerName) {
+        document.getElementById('ownerName').value = importedOwnerName;
+        if (isImporting) {
+            sessionStorage.setItem('iximaker_learn_owner', importedOwnerName);
+            sessionStorage.setItem('iximaker_work_owner', importedOwnerName);
+        }
+    }
+    if (importedOwnerId) {
+        document.getElementById('ownerIdentifier').value = importedOwnerId;
+    }
     document.getElementById('appVersion').value = data.settings?.appVersion || '';
     document.getElementById('chapter').value = data.settings?.chapter || '';
     document.getElementById('calibrateAfterStageID').value = data.settings?.calibrateAfterStageID || '';
@@ -476,6 +488,34 @@ function loadDataToForm(data) {
     const coursesCont = document.getElementById('courses-container');
     if (coursesCont) coursesCont.innerHTML = '';
 
+    // Fusionner avec les données existantes pour ne pas perdre steps/stages/topics/courses non présents
+    let existingData = {};
+    try {
+        const stored = sessionStorage.getItem('iximaker_variant_data');
+        if (stored) {
+            existingData = JSON.parse(stored);
+        }
+    } catch (e) {
+        console.error("Error reading existing variant data:", e);
+    }
+
+    if (!data.process) data.process = {};
+
+    if (existingData.process) {
+        if ((!data.process.topics || data.process.topics.length === 0) && existingData.process.topics) {
+            data.process.topics = existingData.process.topics;
+        }
+        if ((!data.process.courses || data.process.courses.length === 0) && existingData.process.courses) {
+            data.process.courses = existingData.process.courses;
+        }
+        if ((!data.process.steps || data.process.steps.length === 0) && existingData.process.steps) {
+            data.process.steps = existingData.process.steps;
+        }
+        if ((!data.process.stages || data.process.stages.length === 0) && existingData.process.stages) {
+            data.process.stages = existingData.process.stages;
+        }
+    }
+
     // Si le JSON contenait des topics et courses, on les met de côté dans jsonData
     jsonData.process.topics = Array.isArray(data.process?.topics) ? data.process.topics : [];
     jsonData.process.courses = Array.isArray(data.process?.courses) ? data.process.courses : [];
@@ -497,7 +537,7 @@ function importJSON() {
     reader.onload = function (e) {
         try {
             const imported = JSON.parse(e.target.result);
-            loadDataToForm(imported);
+            loadDataToForm(imported, true);
             showMessage('JSON importé avec succès !');
         } catch (error) {
             alert('Erreur lors de l\'import du JSON : ' + error.message);

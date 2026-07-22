@@ -2384,28 +2384,42 @@
         function loadDataToForm(data, isImporting = true) {
             // Si le JSON contient des informations de variante, on les stocke dans le localStorage
             if (isImporting && data.process && (data.process.workspaceShape || data.process.mainHologram)) {
+                let existingData = {};
+                try {
+                    const stored = sessionStorage.getItem('iximaker_variant_data');
+                    if (stored) {
+                        existingData = JSON.parse(stored);
+                    }
+                } catch (e) {
+                    console.error("Error reading existing variant data:", e);
+                }
+
                 const variantPart = {
-                    usage: data.usage || "",
+                    usage: data.usage || existingData.usage || "",
                     settings: {
-                        contentVersion: data.settings?.contentVersion || "",
-                        ownerName: data.settings?.ownerName || "",
-                        ownerIdentifier: data.settings?.ownerIdentifier || "",
-                        appVersion: data.settings?.appVersion || "MiniMaker-1.0",
-                        chapter: data.settings?.chapter || "",
-                        calibrateAfterStageID: data.settings?.calibrateAfterStageID || 0,
-                        unit: data.settings?.unit || "mm",
-                        langCode: data.settings?.langCode || "FR",
-                        creatorID: data.settings?.creatorID || 0
+                        contentVersion: data.settings?.contentVersion || (existingData.settings?.contentVersion || 1),
+                        ownerName: data.settings?.ownerName || (existingData.settings?.ownerName || ""),
+                        ownerIdentifier: data.settings?.ownerIdentifier || (existingData.settings?.ownerIdentifier || ""),
+                        appVersion: data.settings?.appVersion || (existingData.settings?.appVersion || "MiniMaker-1.0"),
+                        chapter: data.settings?.chapter || (existingData.settings?.chapter || ""),
+                        calibrateAfterStageID: data.settings?.calibrateAfterStageID || (existingData.settings?.calibrateAfterStageID || 0),
+                        unit: data.settings?.unit || (existingData.settings?.unit || "mm"),
+                        langCode: data.settings?.langCode || (existingData.settings?.langCode || "FR"),
+                        creatorID: data.settings?.creatorID || (existingData.settings?.creatorID || 0)
                     },
                     process: {
-                        processTitle: data.process.processTitle || "",
-                        processDesc: data.process.processDesc || "",
-                        workspaceShape: data.process.workspaceShape || "square",
-                        workspaceShapeSize: data.process.workspaceShapeSize || { x: 0, y: 0, z: 0 },
-                        workspaceShapeRot: data.process.workspaceShapeRot || { x: 0, y: 0, z: 0 },
-                        workspaceOffsetPos: data.process.workspaceOffsetPos || { x: 0, y: 0, z: 0 },
-                        workspaceOffsetRot: data.process.workspaceOffsetRot || { x: 0, y: 0, z: 0 },
-                        mainHologram: data.process.mainHologram || ""
+                        processTitle: data.process.processTitle || (existingData.process?.processTitle || ""),
+                        processDesc: data.process.processDesc || (existingData.process?.processDesc || ""),
+                        workspaceShape: data.process.workspaceShape || (existingData.process?.workspaceShape || "square"),
+                        workspaceShapeSize: data.process.workspaceShapeSize || (existingData.process?.workspaceShapeSize || { x: 0, y: 0, z: 0 }),
+                        workspaceShapeRot: data.process.workspaceShapeRot || (existingData.process?.workspaceShapeRot || { x: 0, y: 0, z: 0 }),
+                        workspaceOffsetPos: data.process.workspaceOffsetPos || (existingData.process?.workspaceOffsetPos || { x: 0, y: 0, z: 0 }),
+                        workspaceOffsetRot: data.process.workspaceOffsetRot || (existingData.process?.workspaceOffsetRot || { x: 0, y: 0, z: 0 }),
+                        mainHologram: data.process.mainHologram || (existingData.process?.mainHologram || ""),
+                        steps: data.process.steps || (existingData.process?.steps || []),
+                        stages: data.process.stages || (existingData.process?.stages || []),
+                        topics: data.process.topics || (existingData.process?.topics || []),
+                        courses: data.process.courses || (existingData.process?.courses || [])
                     }
                 };
                 sessionStorage.setItem('iximaker_variant_data', JSON.stringify(variantPart));
@@ -2415,10 +2429,29 @@
             // Charger les paramètres généraux
             document.getElementById('usage').value = data.usage || '';
             document.getElementById('contentVersion').value = data.settings?.contentVersion || '';
+
+            const importedOwnerName = data.settings?.ownerName || '';
+            const importedOwnerId = data.settings?.ownerIdentifier || '';
+
             if (isImporting) {
-                document.getElementById('ownerName').value = data.settings?.ownerName || '';
+                if (importedOwnerName) {
+                    document.getElementById('ownerName').value = importedOwnerName;
+                    sessionStorage.setItem('iximaker_work_owner', importedOwnerName);
+                }
+                if (importedOwnerId) {
+                    document.getElementById('ownerIdentifier').value = importedOwnerId;
+                }
+            } else {
+                const localOwner = sessionStorage.getItem('iximaker_work_owner');
+                if (localOwner) {
+                    document.getElementById('ownerName').value = localOwner;
+                } else {
+                    document.getElementById('ownerName').value = '';
+                }
+                if (importedOwnerId) {
+                    document.getElementById('ownerIdentifier').value = importedOwnerId;
+                }
             }
-            document.getElementById('ownerIdentifier').value = data.settings?.ownerIdentifier || '';
             document.getElementById('appVersion').value = data.settings?.appVersion || '';
             document.getElementById('chapter').value = data.settings?.chapter || '';
             document.getElementById('calibrateAfterStageID').value = data.settings?.calibrateAfterStageID || '';
