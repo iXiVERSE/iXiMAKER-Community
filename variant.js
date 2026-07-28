@@ -231,6 +231,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+// Global flag to prevent resets during form loading
+let isSettingData = false;
+
     // Gestionnaire pour changer les labels du menu Position selon l'orientation
     function updatePositionLabels(resetToMiddle = false) {
         const orientationSelect = document.getElementById('workspaceShapeRot');
@@ -241,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!orientationSelect || !positionSelect) return;
 
         const isHorizontal = orientationSelect.value === '0';
-        const currentValue = resetToMiddle ? 'auto-mid' : positionSelect.value;
+        const currentValue = (resetToMiddle && !isSettingData) ? 'auto-mid' : positionSelect.value;
 
         // Mettre à jour les options
         positionSelect.innerHTML = isHorizontal
@@ -327,11 +330,14 @@ function collectFormData() {
                 y: parseInt(document.querySelector('input[name="process.workspaceShapeSize.y"]').value) || 0,
                 z: parseInt(document.querySelector('input[name="process.workspaceShapeSize.z"]').value) || 0
             },
-            workspaceShapeRot: {
-                x: parseInt(document.querySelector('input[name="process.workspaceShapeRot.x"]').value) || 0,
-                y: parseInt(document.querySelector('input[name="process.workspaceShapeRot.y"]').value) || 0,
-                z: parseInt(document.querySelector('select[name="process.workspaceShapeRot.z"]').value) || 0
-            },
+            workspaceShapeRot: (() => {
+                const rotSelectVal = parseInt(document.querySelector('select[name="process.workspaceShapeRot.z"]').value) || 0;
+                return {
+                    x: rotSelectVal === 90 ? -90 : 0,
+                    y: parseInt(document.querySelector('input[name="process.workspaceShapeRot.y"]')?.value) || 0,
+                    z: 0
+                };
+            })(),
             workspaceOffsetPos: {
                 // X manuel via le champ Offset Pos P (mm)
                 x: (() => {
@@ -388,6 +394,7 @@ function collectFormData() {
                 z: parseInt(document.querySelector('input[name="process.workspaceOffsetRot.z"]').value) || 0
             },
             mainHologram: document.getElementById('mainHologram').value,
+            workspaceOffsetCalc: document.getElementById('workspaceOffsetCalc')?.value || 'auto-mid',
             topics: jsonData.process?.topics || [],
             courses: jsonData.process?.courses || []
         }
@@ -426,6 +433,7 @@ function exportJSON() {
 
 // Charger les données dans le formulaire
 function loadDataToForm(data, isImporting = false) {
+    isSettingData = true;
     // Charger les paramètres généraux
     document.getElementById('usage').value = data.usage || '';
     document.getElementById('contentVersion').value = data.settings?.contentVersion || '';
@@ -461,17 +469,42 @@ function loadDataToForm(data, isImporting = false) {
     document.querySelector('input[name="process.workspaceShapeSize.y"]').value = data.process?.workspaceShapeSize?.y || 0;
     document.querySelector('input[name="process.workspaceShapeSize.z"]').value = data.process?.workspaceShapeSize?.z || 0;
 
-    // x et y sont des input hidden, z est un select
+    // x et y sont des input hidden, z est un select (l'orientation)
     var wsRotX = document.querySelector('input[name="process.workspaceShapeRot.x"]');
     if (wsRotX) wsRotX.value = data.process?.workspaceShapeRot?.x || 0;
     var wsRotY = document.querySelector('input[name="process.workspaceShapeRot.y"]');
     if (wsRotY) wsRotY.value = data.process?.workspaceShapeRot?.y || 0;
+    
+    // Déterminer la valeur du select d'orientation
     var wsRotZ = document.querySelector('select[name="process.workspaceShapeRot.z"]');
-    if (wsRotZ) wsRotZ.value = data.process?.workspaceShapeRot?.z || 0;
+    if (wsRotZ) {
+        const isVertical = (data.process?.workspaceShapeRot?.x === -90 || data.process?.workspaceShapeRot?.z === 90);
+        wsRotZ.value = isVertical ? 90 : 0;
+        wsRotZ.dispatchEvent(new Event('change'));
+    }
 
     document.querySelector('input[name="process.workspaceOffsetPos.x"]').value = data.process?.workspaceOffsetPos?.x || 0;
     document.querySelector('input[name="process.workspaceOffsetPos.y"]').value = data.process?.workspaceOffsetPos?.y || 0;
     document.querySelector('input[name="process.workspaceOffsetPos.z"]').value = data.process?.workspaceOffsetPos?.z || 0;
+    
+    // Déduire et restaurer la position du select workspaceOffsetCalc
+    const positionSelect = document.getElementById('workspaceOffsetCalc');
+    if (positionSelect) {
+        if (data.process?.workspaceOffsetCalc) {
+            positionSelect.value = data.process.workspaceOffsetCalc;
+        } else {
+            const yVal = data.process?.workspaceOffsetPos?.y || 0;
+            const hVal = data.process?.workspaceShapeSize?.y || 0;
+            if (hVal > 0 && Math.abs(yVal - Math.round(hVal / 2)) <= 1) {
+                positionSelect.value = 'auto-high';
+            } else if (hVal > 0 && Math.abs(yVal - Math.round(-hVal / 2)) <= 1) {
+                positionSelect.value = 'auto-low';
+            } else {
+                positionSelect.value = 'auto-mid';
+            }
+        }
+        positionSelect.dispatchEvent(new Event('change'));
+    }
     
     const offsetPInput = document.getElementById('workspaceOffsetPosP');
     if (offsetPInput) offsetPInput.value = data.process?.workspaceOffsetPos?.x || 0;
@@ -523,6 +556,7 @@ function loadDataToForm(data, isImporting = false) {
     // Save loaded data into sessionStorage and update banner
     sessionStorage.setItem('iximaker_variant_data', JSON.stringify(data));
     checkSharedVariant();
+    isSettingData = false;
 }
 
 // Importer JSON

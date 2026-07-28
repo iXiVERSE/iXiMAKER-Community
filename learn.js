@@ -2719,6 +2719,7 @@ Si inactif : l'hologramme principal sera remplacé le temps du Questionnaire">
                     workspaceOffsetPos: variantData.process?.workspaceOffsetPos || { x: 0, y: 0, z: 0 },
                     workspaceOffsetRot: variantData.process?.workspaceOffsetRot || { x: 0, y: 0, z: 0 },
                     mainHologram: variantData.process?.mainHologram || "",
+                    workspaceOffsetCalc: variantData.process?.workspaceOffsetCalc || 'auto-mid',
                     topics: [],
                     courses: []
                 }
