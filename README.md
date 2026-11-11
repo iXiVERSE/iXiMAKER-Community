@@ -1,6 +1,6 @@
 # iXiMAKER-Community
 ## Editeur de contenus no-code pour iXiWORK.
-Ces 2 éditeurs permettent de créer et modifier de guidage opérationnels et des évaluations XR au standard iXi et :
+Ces 2 éditeurs permettent de créer et modifier des guidages opérationnels et des évaluations XR au standard iXi et :
 - s'utilisent directement avec un simple navigateur internet,
 - ne nécessitent pas de connexion,
 - sont légers et compatibles avec la version PRO d'iXiMAKER disponible depuis ***iXiMANAGER***
